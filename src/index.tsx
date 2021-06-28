@@ -1,9 +1,18 @@
-import { NativeModules } from 'react-native';
+import React, { useState } from 'react';
+import DeepLink from './features/deeplink/DeepLink';
+import DevtoolsDeeplink from './features/deeplink/deeplinks/DevtoolsDeeplink';
+import { PathfinderPage } from './flows/main/pages/PathfinderPage';
 
-type PathfinderType = {
-  multiply(a: number, b: number): Promise<number>;
+const Pathfinder: React.FC = ({ children }) => {
+  const [enablePathfinder, setEnablePathfinderState] = useState(__DEV__);
+  return (
+    <>
+      {children}
+      <DeepLink>
+        <DevtoolsDeeplink onShownStateChange={setEnablePathfinderState} />
+      </DeepLink>
+      {enablePathfinder && <PathfinderPage />}
+    </>
+  );
 };
-
-const { Pathfinder } = NativeModules;
-
-export default Pathfinder as PathfinderType;
+export default Pathfinder;

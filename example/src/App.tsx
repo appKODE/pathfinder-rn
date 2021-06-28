@@ -1,19 +1,26 @@
 import * as React from 'react';
 
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Button } from 'react-native';
 import Pathfinder from 'react-native-pathfinder';
 
 export default function App() {
-  const [result, setResult] = React.useState<number | undefined>();
-
-  React.useEffect(() => {
-    Pathfinder.multiply(3, 7).then(setResult);
+  const request = React.useCallback(async () => {
+    try {
+      const result = await fetch(
+        'https://webhook.site/52b73816-f2b4-4832-acc4-a945c4ff79af?id=1'
+      );
+      console.log(await result.text());
+    } catch (e) {
+      console.log(e);
+    }
   }, []);
 
   return (
-    <View style={styles.container}>
-      <Text>Result: {result}</Text>
-    </View>
+    <Pathfinder>
+      <View style={styles.container}>
+        <Button title="test" onPress={request} />
+      </View>
+    </Pathfinder>
   );
 }
 

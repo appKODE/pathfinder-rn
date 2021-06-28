@@ -1,0 +1,1 @@
+export { parseURL } from './parseUrl';
