@@ -149,5 +149,9 @@
         }
       ]
     ]
+  },
+  "dependencies": {
+    "react-native-url-polyfill": "^1.3.0",
+    "react-native-uuid": "^2.0.1"
   }
 }
