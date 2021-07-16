@@ -1,35 +1,24 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { FlatList } from 'react-native';
 
-import { apiResolver } from '../../../features/apiResolver';
-import XHRInterceptor, {
-  SendCallback,
-} from '../../../features/network/XHRInterceptor';
-import { useApiCallsState } from '../hooks/useApiCallsState';
 import { PathfinderTemplate } from '../templates/PathfinderTemplate';
 import { ApiListItem } from '../organisms';
+import { usePathfinder } from '../../../features/pathfinder-react';
 
 export const PathfinderPage: React.FC = () => {
-  const [calls, { addApiCall }] = useApiCallsState();
+  const pathfinder = usePathfinder();
 
-  React.useEffect(() => {
-    const interceptor: SendCallback = (apiCall) => {
-      addApiCall(apiCall);
-      return apiResolver.resolve(apiCall);
-    };
-
-    XHRInterceptor.add(interceptor);
-    return () => {
-      XHRInterceptor.remove(interceptor);
-    };
-  }, [addApiCall]);
-
+  const paths = useMemo(() => {
+    return Object.keys(pathfinder.scheme.paths);
+  }, [pathfinder]);
   return (
     <PathfinderTemplate>
       <FlatList
-        data={calls}
-        renderItem={({ item }) => <ApiListItem {...item} />}
-        keyExtractor={(item) => item.method + item.url}
+        data={paths}
+        keyExtractor={(item) => item}
+        renderItem={({ item }) => (
+          <ApiListItem path={item} {...pathfinder.scheme.paths[item]} />
+        )}
       />
     </PathfinderTemplate>
   );
