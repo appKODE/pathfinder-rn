@@ -2,12 +2,18 @@ import * as React from 'react';
 
 import { StyleSheet, View, Button } from 'react-native';
 import Pathfinder from 'react-native-pathfinder';
+import dev from '../dnevnik.dev.json';
 
 export default function App() {
   const request = React.useCallback(async () => {
     try {
+      const headers = new Headers();
+      headers.append('Accept', 'application/json');
       const result = await fetch(
-        'https://webhook.site/52b73816-f2b4-4832-acc4-a945c4ff79af?id=1'
+        'https://dnevnik-dev.mos.ru/mobile/api/profile',
+        {
+          headers,
+        }
       );
       console.log(await result.text());
     } catch (e) {
@@ -16,7 +22,11 @@ export default function App() {
   }, []);
 
   return (
-    <Pathfinder>
+    <Pathfinder
+      //@ts-ignore
+      scheme={dev}
+      settings={{ mockServer: 'http://127.0.0.1:3100', paths: {} }}
+    >
       <View style={styles.container}>
         <Button title="test" onPress={request} />
       </View>
