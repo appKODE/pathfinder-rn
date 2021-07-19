@@ -4,8 +4,7 @@ import type {
   OpenAPIObject,
   OperationObject,
   ParameterObject,
-  RequestBodyObject,
-} from '../../OpenApi';
+} from './openApi/OpenApi';
 import {
   compareUrlWithTemplate,
   createDomain,
@@ -17,6 +16,7 @@ import {
 type MethodObject = Pick<OperationObject, 'requestBody'> & {
   parameters?: ParameterObject[];
   enabledMock: boolean;
+  enabled: boolean;
 };
 
 type Template = {
@@ -26,14 +26,29 @@ type Template = {
   delete?: MethodObject;
 };
 
-type Settings = {
-  mockServer?: string;
+export type TPathfinderSettings = {
+  mockServer?: {
+    domain: string;
+    headers: Record<string, string>;
+    queryParams: Record<string, string | number | boolean>;
+  };
   paths: Record<string, Template>;
 };
 
-export type TPathfinderSettings = {
+type ResolveParams = {
+  url: string;
+  method: keyof Template;
+  headers?: Record<string, string>;
+};
+
+type ResolveResult = {
+  url: string;
+  headers: Record<string, string>;
+};
+
+export type TPathfinderProps = {
   scheme: OpenAPIObject;
-  settings?: Settings;
+  settings?: Partial<TPathfinderSettings>;
 };
 
 const initSettings = {
@@ -41,20 +56,26 @@ const initSettings = {
 };
 
 export class Pathfinder {
-  static create(config: TPathfinderSettings) {
+  static create(config: TPathfinderProps) {
     return new Pathfinder(config);
   }
 
   private _scheme: OpenAPIObject;
-  private _settings: Settings = initSettings;
-  private _listeners: Record<string, (newSettings: Settings) => void> = {};
+  private _settings: TPathfinderSettings = initSettings;
+  private _listeners: Record<
+    string,
+    (newSettings: TPathfinderSettings) => void
+  > = {};
 
-  constructor({ scheme, settings }: TPathfinderSettings) {
+  constructor({ scheme, settings }: TPathfinderProps) {
     this._scheme = scheme;
-    this._settings = settings || initSettings;
+    this._settings = {
+      ...initSettings,
+      ...settings,
+    };
   }
 
-  getUrl(url: string, method: keyof Template): string {
+  resolve({ url, method, headers = {} }: ResolveParams): ResolveResult {
     const template = Object.keys(this._scheme.paths).find(
       compareUrlWithTemplate(url)
     );
@@ -62,61 +83,46 @@ export class Pathfinder {
     if (
       !template ||
       !this._settings.paths[template] ||
-      !this._settings.paths[template][method]
+      !this._settings.paths[template][method] ||
+      !this._settings.paths[template][method]?.enabled
     ) {
-      return url;
+      return { url, headers };
     }
 
     const templateObject = this._scheme.paths[template];
 
     if (!templateObject[method]) {
-      return url;
+      return { url, headers };
     }
 
-    return this.buildUrl(
-      url,
-      template,
-      this._settings.paths[template][method]!
-    );
+    const settings = this._settings.paths[template][method]!;
+    const resultUrl = this.buildUrl(url, template, settings);
+
+    const resultHeaders = this.buildHeaders(headers, settings);
+
+    return {
+      url: resultUrl,
+      headers: resultHeaders,
+    };
   }
 
-  setTemplateSettings(
-    template: string,
-    method: keyof Template,
-    config: {
-      parameters?: ParameterObject[];
-      requestBody?: RequestBodyObject;
-      enabledMock?: boolean;
-    }
-  ) {
-    if (!this._settings.paths[template]) {
-      this._settings.paths[template] = {};
-    }
-
-    if (!this._settings.paths[template][method]) {
-      this._settings.paths[template][method] = { enabledMock: false };
-    }
-
-    this._settings.paths[template][method] = {
-      ...this._settings.paths[template][method],
-      ...config,
-      enabledMock:
-        config.enabledMock === undefined
-          ? this._settings.paths[template][method]!.enabledMock
-          : config.enabledMock,
-    };
-    if (this._listeners.update_settings) {
-      this._listeners.update_settings({ ...this._settings });
-    }
+  getSettings(template: string, method: keyof Template) {
+    const templateSettings = this._settings.paths[template];
+    if (!templateSettings) return;
+    return templateSettings[method];
   }
 
   getScheme() {
     return this._scheme;
   }
 
+  getAllSettings() {
+    return this._settings;
+  }
+
   addListener(
     event: 'update_settings',
-    callback: (newSettings: Settings) => void
+    callback: (newSettings: TPathfinderSettings) => void
   ) {
     this._listeners[event] = callback;
     return {
@@ -126,21 +132,50 @@ export class Pathfinder {
     };
   }
 
+  updateTemplateSettings(
+    template: string,
+    method: keyof Template,
+    cb: (lastState: MethodObject) => MethodObject
+  ) {
+    this.prepareTemplateSettings(template, method);
+    this._settings.paths[template][method] = cb(
+      this._settings.paths[template][method]!
+    );
+    if (this._listeners.update_settings) {
+      this._listeners.update_settings({ ...this._settings });
+    }
+  }
+
+  private prepareTemplateSettings(template: string, method: keyof Template) {
+    if (!this._settings.paths[template]) {
+      this._settings.paths[template] = {};
+    }
+
+    if (!this._settings.paths[template][method]) {
+      this._settings.paths[template][method] = {
+        enabledMock: false,
+        enabled: false,
+      };
+    }
+  }
+
   private buildUrl(
     url: string,
     template: string,
     settings: MethodObject
   ): string {
-    const { mockServer } = this._settings;
     const { pathname, hostname, protocol, port, search } = new URL(url);
     let pathParameters = getPathParameters(pathname, template);
     let queryParameters = getQueryParams(search);
 
     let domain = createDomain(protocol, hostname, port);
 
-    if (settings.enabledMock && mockServer) {
-      queryParameters.__dynamic = 'false';
-      domain = mockServer;
+    if (settings.enabledMock && this.canUseMockServer()) {
+      queryParameters = {
+        ...queryParameters,
+        ...this.getQueryParamsMockServer(),
+      };
+      domain = this.getDomainMockServer();
     }
 
     if (settings.parameters) {
@@ -162,5 +197,66 @@ export class Pathfinder {
     });
 
     return `${domain}${path}`;
+  }
+
+  private buildHeaders(
+    originalHeaders: Record<string, string>,
+    settings: MethodObject
+  ) {
+    let headers = { ...originalHeaders };
+
+    if (settings.enabledMock && this.canUseMockServer()) {
+      headers = {
+        ...headers,
+        ...this.getHeadersMockServer(),
+      };
+    }
+
+    if (settings.parameters) {
+      settings.parameters.forEach((parameter) => {
+        if (parameter.in === 'header') {
+          headers[parameter.name] = parameter.value;
+        }
+      });
+    }
+
+    return headers;
+  }
+
+  private canUseMockServer() {
+    return Boolean(
+      this._settings.mockServer && this._settings.mockServer.domain
+    );
+  }
+
+  private getDomainMockServer() {
+    if (!this._settings.mockServer || !this._settings.mockServer.domain) {
+      throw Error('getDomainMockServer() was called before canUseMockServer()');
+    }
+    return this._settings.mockServer.domain;
+  }
+
+  private getQueryParamsMockServer() {
+    if (!this._settings.mockServer || !this._settings.mockServer.domain) {
+      throw Error(
+        'getQueryParamsMockServer() was called before canUseMockServer()'
+      );
+    }
+    const queryParams: Record<string, string> = {};
+    Object.entries(this._settings.mockServer.queryParams || {}).forEach(
+      ([key, value]) => {
+        queryParams[key] = String(value);
+      }
+    );
+    return queryParams;
+  }
+
+  private getHeadersMockServer() {
+    if (!this._settings.mockServer || !this._settings.mockServer.domain) {
+      throw Error(
+        'getHeadersMockServer() was called before canUseMockServer()'
+      );
+    }
+    return this._settings.mockServer.headers || {};
   }
 }

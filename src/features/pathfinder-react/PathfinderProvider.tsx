@@ -1,22 +1,39 @@
 import React, { useMemo, useRef, useState } from 'react';
-import { Pathfinder, TPathfinderSettings } from '../pathfinder';
+import {
+  Pathfinder,
+  TPathfinderProps,
+  TPathfinderSettings,
+} from '../pathfinder';
 import { PathfinderContext } from './PathfinderContext';
 
-export type TPathfinderProviderProps = TPathfinderSettings;
+export type TPathfinderProviderProps = TPathfinderProps & {
+  devMode?: boolean;
+};
 
 export const PathfinderProvider: React.FC<TPathfinderProviderProps> = ({
   children,
   scheme,
   settings,
+  devMode,
 }) => {
   const instance = useRef(Pathfinder.create({ scheme, settings }));
-  const [_settings, setSettings] = useState(settings || { paths: {} });
+  const [_settings, setSettings] = useState<TPathfinderSettings>(
+    instance.current.getAllSettings()
+  );
   React.useEffect(() => {
-    const event = instance.current.addListener('update_settings', setSettings);
+    const event = instance.current.addListener(
+      'update_settings',
+      (newState) => {
+        if (devMode) {
+          console.log(newState);
+        }
+        setSettings(newState);
+      }
+    );
     return () => {
       event.remove();
     };
-  }, [_settings]);
+  }, [_settings, devMode]);
   const value = useMemo(
     () => ({
       pathfinder: instance.current,

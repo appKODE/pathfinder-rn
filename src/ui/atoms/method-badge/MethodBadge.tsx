@@ -12,8 +12,24 @@ const styles = StyleSheet.create({
     width: 40,
     textAlign: 'center',
   },
+  get: {
+    backgroundColor: '#0f6ab4',
+  },
+  post: {
+    backgroundColor: '#10a54a',
+  },
+  put: {
+    backgroundColor: '#c5862b',
+  },
+  delete: {
+    backgroundColor: '#a41e22',
+  },
 });
 
-export const MethodBadge: React.FC = ({ children }) => {
-  return <Text style={styles.common}>{children}</Text>;
+type Props = {
+  method: 'get' | 'post' | 'delete' | 'put';
+};
+
+export const MethodBadge: React.FC<Props> = ({ children, method }) => {
+  return <Text style={[styles.common, styles[method]]}>{children}</Text>;
 };

@@ -6330,7 +6330,12 @@
   },
   "servers": [
     {
-      "url": "//dnevnik-dev.mos.ru/"
+      "url": "//dnevnik-dev.mos.ru/",
+      "description": "dev"
+    },
+    {
+      "url": "//dnevnik.mos.ru/",
+      "description": "production"
     }
   ],
   "components": {
