@@ -3,7 +3,7 @@ import XHRInterceptorBase from 'react-native/Libraries/Network/XHRInterceptor';
 
 type OriginalSendCallback = (data: any, xhr: any) => void;
 
-type Params = { method: string; url: string };
+type Params = { method: string; url: string; headers: Record<string, string> };
 export type SendCallback = (params: Params) => Partial<Params> | void;
 
 const originalMethod = XHRInterceptorBase.setSendCallback;
@@ -28,13 +28,15 @@ class Interceptor {
 
   add(cb: SendCallback) {
     XHRInterceptorBase.setSendCallback((_: any, xhr: any) => {
-      const { method, url } =
+      const { method, url, headers } =
         cb({
           method: xhr._method,
           url: xhr._url,
+          headers: xhr._headers,
         }) || {};
       xhr._method = method || xhr._method;
       xhr._url = url || xhr._url;
+      xhr._headers = headers || xhr._headers;
     });
   }
 

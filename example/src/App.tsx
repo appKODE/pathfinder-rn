@@ -4,11 +4,22 @@ import { StyleSheet, View, Button } from 'react-native';
 import Pathfinder from 'react-native-pathfinder';
 import dev from '../dnevnik.dev.json';
 
+const settings = {
+  mockServer: {
+    domain: 'http://127.0.0.1:3100',
+    headers: {
+      Accept: 'application/json',
+    },
+    queryParams: {
+      __dynamic: false,
+    },
+  },
+};
+
 export default function App() {
   const request = React.useCallback(async () => {
     try {
       const headers = new Headers();
-      headers.append('Accept', 'application/json');
       const result = await fetch(
         'https://dnevnik-dev.mos.ru/mobile/api/profile',
         {
@@ -25,7 +36,8 @@ export default function App() {
     <Pathfinder
       //@ts-ignore
       scheme={dev}
-      settings={{ mockServer: 'http://127.0.0.1:3100', paths: {} }}
+      settings={settings}
+      devMode
     >
       <View style={styles.container}>
         <Button title="test" onPress={request} />
@@ -39,6 +51,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    zIndex: 0,
   },
   box: {
     width: 60,

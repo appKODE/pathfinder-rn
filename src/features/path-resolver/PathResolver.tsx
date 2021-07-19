@@ -8,14 +8,15 @@ export const PathResolver: React.FC = () => {
   const { pathfinder } = usePathfinder();
   React.useEffect(() => {
     const interceptor: SendCallback = (apiCall) => {
-      const url = pathfinder.getUrl(
-        apiCall.url,
-        apiCall.method.toLowerCase() as any
-      );
-      console.log({ original: apiCall.url, resolved: url });
+      const { url, headers } = pathfinder.resolve({
+        ...apiCall,
+        method: apiCall.method.toLowerCase() as any,
+      });
+      console.log({ original: apiCall.url, resolved: url, headers });
       return {
         method: apiCall.method,
         url,
+        headers,
       };
     };
 
