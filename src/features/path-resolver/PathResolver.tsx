@@ -12,7 +12,7 @@ export const PathResolver: React.FC = () => {
         ...apiCall,
         method: apiCall.method.toLowerCase() as any,
       });
-      console.log({ original: apiCall.url, resolved: url, headers });
+
       return {
         method: apiCall.method,
         url,

@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 12,
     fontWeight: 'bold',
+    color: 'gray',
   },
   description: {
     fontSize: 12,

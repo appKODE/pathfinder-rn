@@ -52,11 +52,20 @@ export const ApiDetails: React.FC<Props> = ({
     (type: ParameterObject['in'], name: string) => (value: string) => {
       pathfinder.updateTemplateSettings(path, method, (lastState) => {
         const parameters = [...(lastState.parameters || [])];
-        parameters.forEach((parameter) => {
-          if (parameter.in === type && parameter.name === name) {
-            parameter.value = value;
-          }
-        });
+        const index = parameters.findIndex(
+          (parameter) => parameter.in === type && parameter.name === name
+        );
+
+        if (index !== -1) {
+          parameters[index].value = value;
+        } else {
+          parameters.push({
+            in: type,
+            name,
+            value,
+          });
+        }
+
         return {
           ...lastState,
           parameters,
