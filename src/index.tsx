@@ -13,10 +13,9 @@ import { PathResolver } from './features/path-resolver/PathResolver';
 
 const STORAGE_KEY = '@pathfinder/settings';
 
-const PathfinderPure: React.FC<TPathfinderProviderProps> = ({
-  settings,
-  ...props
-}) => {
+type Props = Omit<TPathfinderProviderProps, 'onChangeState'>;
+
+const PathfinderPure: React.FC<Props> = ({ settings, ...props }) => {
   const [enablePathfinder, setEnablePathfinderState] = useState(__DEV__);
   const [savedSettings, setNewSettings] = useState<
     Partial<TPathfinderSettings> | undefined
@@ -63,10 +62,7 @@ const PathfinderPure: React.FC<TPathfinderProviderProps> = ({
   );
 };
 
-const Pathfinder: React.FC<TPathfinderProviderProps> = ({
-  children,
-  ...props
-}) => {
+const Pathfinder: React.FC<Props> = ({ children, ...props }) => {
   return (
     <>
       {children}
