@@ -1,11 +1,14 @@
-import React, { useCallback, useState } from 'react';
+import React from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 
 import { MethodBadge, Layout, Typography } from '../../../../ui/atoms';
 import type { PathItemObject } from '../../../../features/pathfinder';
 import { ApiDetails } from '../api-details/ApiDetails';
+
 type Props = PathItemObject & {
   path: string;
+  shownDetailsID: string;
+  onPress: (path: string, method: string) => void;
 };
 
 const styles = StyleSheet.create({
@@ -22,12 +25,12 @@ type TMethod = 'get' | 'post' | 'put' | 'delete';
 
 const methods: TMethod[] = ['get', 'post', 'put', 'delete'];
 
-export const ApiListItem: React.FC<Props> = ({ path, ...props }) => {
-  const [shownDetails, setShowDetails] = useState(false);
-  const toggleDetails = useCallback(
-    () => setShowDetails((shown) => !shown),
-    []
-  );
+export const ApiListItem: React.FC<Props> = ({
+  path,
+  shownDetailsID,
+  onPress,
+  ...props
+}) => {
   return (
     <>
       {methods
@@ -35,7 +38,7 @@ export const ApiListItem: React.FC<Props> = ({ path, ...props }) => {
         .map((method) => {
           return (
             <Layout.Cal key={method + path} style={styles.root}>
-              <TouchableOpacity onPress={toggleDetails}>
+              <TouchableOpacity onPress={() => onPress(path, method)}>
                 <Layout.Row alignItems="center">
                   <MethodBadge method={method}>{method}</MethodBadge>
                   <Layout.Cal style={styles.content}>
@@ -43,7 +46,7 @@ export const ApiListItem: React.FC<Props> = ({ path, ...props }) => {
                   </Layout.Cal>
                 </Layout.Row>
               </TouchableOpacity>
-              {shownDetails && (
+              {shownDetailsID === `${path}${method}` && (
                 <ApiDetails method={method} path={path} {...props[method]!} />
               )}
             </Layout.Cal>

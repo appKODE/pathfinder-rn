@@ -8,6 +8,7 @@ import { PathfinderContext } from './PathfinderContext';
 
 export type TPathfinderProviderProps = TPathfinderProps & {
   devMode?: boolean;
+  onChangeState: (state: TPathfinderSettings) => void;
 };
 
 export const PathfinderProvider: React.FC<TPathfinderProviderProps> = ({
@@ -15,6 +16,7 @@ export const PathfinderProvider: React.FC<TPathfinderProviderProps> = ({
   scheme,
   settings,
   devMode,
+  onChangeState,
 }) => {
   const instance = useRef(Pathfinder.create({ scheme, settings }));
   const [_settings, setSettings] = useState<TPathfinderSettings>(
@@ -28,12 +30,13 @@ export const PathfinderProvider: React.FC<TPathfinderProviderProps> = ({
           console.log(newState);
         }
         setSettings(newState);
+        onChangeState(newState);
       }
     );
     return () => {
       event.remove();
     };
-  }, [_settings, devMode]);
+  }, [_settings, devMode, onChangeState]);
   const value = useMemo(
     () => ({
       pathfinder: instance.current,
