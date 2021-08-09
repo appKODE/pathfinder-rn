@@ -24,7 +24,6 @@ export const generatePath = (
   if (queryChunks.length > 0) {
     queryString = '?' + queryChunks.join('&');
   }
-
   return withPathParams + queryString;
 };
 
@@ -52,6 +51,9 @@ export const getPathParameters = (pathname: string, template: string) => {
 };
 
 export const getQueryParams = (search: string): Record<string, string> => {
+  if (search.startsWith('?')) {
+    search = search.replace('?', '');
+  }
   return parse(search) as any;
 };
 

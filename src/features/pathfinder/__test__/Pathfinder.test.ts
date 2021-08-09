@@ -32,6 +32,29 @@ describe('pathfinder', function () {
 
   it('should getting mock url', function () {
     pathfinder.updateTemplateSettings(
+      '/mobile/api/school_info',
+      'get',
+      (lastState) => ({
+        ...lastState,
+        enabledMock: true,
+        enabled: true,
+      })
+    );
+    expect(
+      pathfinder.resolve({
+        url: 'https://dnevnik-dev.mos.ru/mobile/api/school_info?school_id=59&class_unit_id=403491',
+        method: 'get',
+      })
+    ).toEqual({
+      url: 'https://127.0.0.1:3100/mobile/api/school_info?school_id=59&class_unit_id=403491&__dynamic=false',
+      headers: {
+        Accept: 'application/json',
+      },
+    });
+  });
+
+  it('should getting mock url 2', function () {
+    pathfinder.updateTemplateSettings(
       '/mobile/api/events/{event_item_id}',
       'get',
       (lastState) => ({
