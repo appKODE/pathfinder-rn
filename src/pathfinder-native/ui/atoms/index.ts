@@ -4,3 +4,4 @@ export { Layout } from './layout/Layout';
 export { TextInput } from './inputs';
 export * from './button/Button';
 export * from './typography/Typography';
+export { Control } from './control/Control';

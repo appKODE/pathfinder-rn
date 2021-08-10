@@ -3,13 +3,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import DeepLink from './pathfinder-native/features/deeplink/DeepLink';
 import DevtoolsDeeplink from './pathfinder-native/features/deeplink/deeplinks/DevtoolsDeeplink';
-import { PathfinderPage } from './pathfinder-native/flows/main/pages/PathfinderPage';
 import {
   PathfinderProvider,
   TPathfinderProviderProps,
   TPathfinderSettings,
 } from './pathfinder-react';
 import { PathResolver } from './pathfinder-native/features/path-resolver/PathResolver';
+import { App } from './pathfinder-native';
 
 const STORAGE_KEY = '@pathfinder/settings';
 
@@ -55,7 +55,7 @@ const PathfinderPure: React.FC<Props> = ({ settings, ...props }) => {
           settings={savedSettings}
         >
           <PathResolver />
-          <PathfinderPage />
+          <App />
         </PathfinderProvider>
       )}
     </>
