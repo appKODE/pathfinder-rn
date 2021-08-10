@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, StyleSheet, TextStyle } from 'react-native';
+import { Text, StyleSheet, TextStyle, TextProps } from 'react-native';
 
 type TFontType =
   | 'h1'
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export type TTypographyProps = {
+export type TTypographyProps = TextProps & {
   variant?: TFontType;
   textAlign?: TextStyle['textAlign'];
 };
@@ -61,9 +61,19 @@ export const Typography: React.FC<TTypographyProps> = ({
   children,
   variant,
   textAlign = 'left',
+  ...props
 }) => {
   return (
-    <Text style={[styles.common, variant && styles[variant], { textAlign }]}>
+    <Text
+      {...props}
+      allowFontScaling={false}
+      style={[
+        styles.common,
+        variant && styles[variant],
+        { textAlign },
+        props.style,
+      ]}
+    >
       {children}
     </Text>
   );
