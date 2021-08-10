@@ -1,7 +1,6 @@
 import React, { useMemo, useState, useCallback } from 'react';
 import { FlatList } from 'react-native';
 
-import { PathfinderTemplate } from '../templates/PathfinderTemplate';
 import { ApiListItem } from '../organisms';
 import { usePathfinder } from '../../../../pathfinder-react';
 import { Layout, TextInput } from '../../../ui/atoms';
@@ -28,7 +27,7 @@ export const PathfinderPage: React.FC = () => {
     );
   }, [pathfinder, searchQuery]);
   return (
-    <PathfinderTemplate>
+    <>
       <Layout.Cal spacing={{ left: 2, right: 2 }}>
         <TextInput
           onChangeText={setSearchQuery}
@@ -48,6 +47,6 @@ export const PathfinderPage: React.FC = () => {
           />
         )}
       />
-    </PathfinderTemplate>
+    </>
   );
 };
