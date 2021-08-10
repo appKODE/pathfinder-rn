@@ -3,7 +3,7 @@ import { FlatList } from 'react-native';
 
 import { PathfinderTemplate } from '../templates/PathfinderTemplate';
 import { ApiListItem } from '../organisms';
-import { usePathfinder } from '../../../features/pathfinder-react';
+import { usePathfinder } from '../../../../pathfinder-react';
 import { Layout, TextInput } from '../../../ui/atoms';
 
 export const PathfinderPage: React.FC = () => {

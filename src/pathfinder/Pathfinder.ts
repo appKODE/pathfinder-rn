@@ -1,5 +1,3 @@
-import { URL } from 'react-native-url-polyfill';
-
 import type {
   OpenAPIObject,
   OperationObject,
@@ -11,6 +9,7 @@ import {
   generatePath,
   getPathParameters,
   getQueryParams,
+  URL,
 } from './utils';
 
 type MethodObject = Pick<OperationObject, 'requestBody'> & {
@@ -75,7 +74,7 @@ export class Pathfinder {
     };
   }
 
-  resolve({ url, method, headers = {} }: ResolveParams): ResolveResult {
+  public resolve({ url, method, headers = {} }: ResolveParams): ResolveResult {
     const template = Object.keys(this._scheme.paths).find(
       compareUrlWithTemplate(url)
     );
@@ -106,21 +105,21 @@ export class Pathfinder {
     };
   }
 
-  getSettings(template: string, method: keyof Template) {
+  public getSettings(template: string, method: keyof Template) {
     const templateSettings = this._settings.paths[template];
     if (!templateSettings) return;
     return templateSettings[method];
   }
 
-  getScheme() {
+  public getScheme() {
     return this._scheme;
   }
 
-  getAllSettings() {
+  public getAllSettings() {
     return this._settings;
   }
 
-  addListener(
+  public addListener(
     event: 'update_settings',
     callback: (newSettings: TPathfinderSettings) => void
   ) {
@@ -132,7 +131,7 @@ export class Pathfinder {
     };
   }
 
-  updateTemplateSettings(
+  public updateTemplateSettings(
     template: string,
     method: keyof Template,
     cb: (lastState: MethodObject) => MethodObject

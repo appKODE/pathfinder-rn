@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 
 import { MethodBadge, Layout, Typography } from '../../../../ui/atoms';
-import type { PathItemObject } from '../../../../features/pathfinder';
+import type { PathItemObject } from '../../../../../pathfinder';
 import { ApiDetails } from '../api-details/ApiDetails';
 
 type Props = PathItemObject & {

@@ -1,4 +1,4 @@
-import { URL } from 'react-native-url-polyfill';
+import WhatwgUrl from 'whatwg-url';
 import { parse } from 'querystring';
 
 type TBuildUrlInputParams = {
@@ -62,5 +62,10 @@ export const createDomain = (
   hostname: string,
   port?: string
 ) => {
+  if (!protocol.endsWith(':')) {
+    protocol += ':';
+  }
   return `${protocol}//${hostname}${port ? ':' + port : ''}`;
 };
+
+export const URL = WhatwgUrl.URL;

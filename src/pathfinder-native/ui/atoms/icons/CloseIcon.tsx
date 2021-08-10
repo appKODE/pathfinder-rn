@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image, StyleSheet } from 'react-native';
 
-import { Assets } from '../../../../src/assets';
+import { Assets } from '../../../assets';
 
 const styles = StyleSheet.create({
   icon: {

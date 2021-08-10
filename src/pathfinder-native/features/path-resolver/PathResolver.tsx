@@ -2,7 +2,7 @@ import React from 'react';
 
 import type { SendCallback } from '../network/XHRInterceptor';
 import XHRInterceptor from '../network/XHRInterceptor';
-import { usePathfinder } from '../pathfinder-react';
+import { usePathfinder } from '../../../pathfinder-react';
 
 export const PathResolver: React.FC = () => {
   const { pathfinder } = usePathfinder();
