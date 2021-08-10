@@ -1,10 +1,9 @@
 import React, { useCallback, useState } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
+
+import { Typography, Layout } from '../../atoms';
 
 const styles = StyleSheet.create({
-  root: {
-    marginVertical: 10,
-  },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -29,14 +28,14 @@ export const CollapsableBlock: React.FC<Props> = ({ title, children }) => {
     setOpenState((state) => !state);
   }, []);
   return (
-    <View style={styles.root}>
+    <Layout.Cal spacing={{ top: 2, bottom: 2 }}>
       <TouchableOpacity style={styles.header} onPress={toggle}>
-        <Text style={styles.title}>{title}</Text>
-        <Text style={styles.collaseLabel}>
+        <Typography variant="h6">{title}</Typography>
+        <Typography variant="body1" style={styles.collaseLabel}>
           {!open ? 'Развернуть' : 'Свернуть'}
-        </Text>
+        </Typography>
       </TouchableOpacity>
       {open && children}
-    </View>
+    </Layout.Cal>
   );
 };
