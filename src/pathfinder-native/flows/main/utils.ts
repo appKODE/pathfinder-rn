@@ -2,7 +2,7 @@ import {
   isReferenceObject,
   ParameterObject,
   ReferenceObject,
-} from '../../features/pathfinder';
+} from '../../../pathfinder';
 
 export const unionParameters = (
   schemeParameters: (ParameterObject | ReferenceObject)[],

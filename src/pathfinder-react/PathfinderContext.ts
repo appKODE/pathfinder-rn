@@ -3,7 +3,7 @@ import type {
   Pathfinder,
   TPathfinderSettings,
   TPathfinderProps,
-} from '../pathfinder/Pathfinder';
+} from '../pathfinder';
 
 export interface IPathfinderContext extends TPathfinderProps {
   pathfinder: Pathfinder;

@@ -1,11 +1,11 @@
 import React from 'react';
 import { StyleSheet, Switch } from 'react-native';
 
-import { usePathfinder } from '../../../../features/pathfinder-react';
+import { usePathfinder } from '../../../../../pathfinder-react';
 import type {
   OperationObject,
   ParameterObject,
-} from '../../../../features/pathfinder';
+} from '../../../../../pathfinder';
 import { Layout, Typography } from '../../../../ui/atoms';
 import { CollapsableBlock } from '../../../../ui/organisms';
 import { Parameter } from '../parameter/Parameter';

@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 
-import type { ParameterObject } from '../../../../features/pathfinder';
+import type { ParameterObject } from '../../../../../pathfinder';
 import { Layout, TextInput } from '../../../../ui/atoms';
 
 const styles = StyleSheet.create({

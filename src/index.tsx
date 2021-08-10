@@ -1,15 +1,15 @@
 import React, { useCallback, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import DeepLink from './features/deeplink/DeepLink';
-import DevtoolsDeeplink from './features/deeplink/deeplinks/DevtoolsDeeplink';
-import { PathfinderPage } from './flows/main/pages/PathfinderPage';
+import DeepLink from './pathfinder-native/features/deeplink/DeepLink';
+import DevtoolsDeeplink from './pathfinder-native/features/deeplink/deeplinks/DevtoolsDeeplink';
+import { PathfinderPage } from './pathfinder-native/flows/main/pages/PathfinderPage';
 import {
   PathfinderProvider,
   TPathfinderProviderProps,
   TPathfinderSettings,
-} from './features/pathfinder-react';
-import { PathResolver } from './features/path-resolver/PathResolver';
+} from './pathfinder-react';
+import { PathResolver } from './pathfinder-native/features/path-resolver/PathResolver';
 
 const STORAGE_KEY = '@pathfinder/settings';
 
