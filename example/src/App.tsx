@@ -1,10 +1,11 @@
 import * as React from 'react';
 
 import { StyleSheet, View, Button } from 'react-native';
-import Pathfinder from 'react-native-pathfinder';
+import Pathfinder, { TPathfinderProps } from 'react-native-pathfinder';
 import dev from '../dnevnik.dev.json';
+import prod from '../dnevnik.prod.json';
 
-const settings = {
+const settings: TPathfinderProps['settings'] = {
   mockServer: {
     domain: 'http://127.0.0.1:3100',
     headers: {
@@ -14,7 +15,21 @@ const settings = {
       __dynamic: false,
     },
   },
+  enviroment: 'dev',
 };
+
+const enviroments: TPathfinderProps['enviroments'] = [
+  {
+    name: 'dev',
+    //@ts-ignore
+    scheme: dev,
+  },
+  {
+    name: 'prod',
+    //@ts-ignore
+    scheme: prod,
+  },
+];
 
 export default function App() {
   const request = React.useCallback(async () => {
@@ -33,12 +48,7 @@ export default function App() {
   }, []);
 
   return (
-    <Pathfinder
-      //@ts-ignore
-      scheme={dev}
-      settings={settings}
-      devMode
-    >
+    <Pathfinder enviroments={enviroments} settings={settings} devMode>
       <View style={styles.container}>
         <Button title="test" onPress={request} />
       </View>

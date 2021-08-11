@@ -13,12 +13,12 @@ export type TPathfinderProviderProps = TPathfinderProps & {
 
 export const PathfinderProvider: React.FC<TPathfinderProviderProps> = ({
   children,
-  scheme,
+  enviroments,
   settings,
   devMode,
   onChangeState,
 }) => {
-  const instance = useRef(Pathfinder.create({ scheme, settings }));
+  const instance = useRef(Pathfinder.create({ enviroments, settings }));
   const [_settings, setSettings] = useState<TPathfinderSettings>(
     instance.current.getAllSettings()
   );
@@ -40,10 +40,12 @@ export const PathfinderProvider: React.FC<TPathfinderProviderProps> = ({
   const value = useMemo(
     () => ({
       pathfinder: instance.current,
-      scheme,
+      scheme: enviroments.find((env) => env.name === _settings.enviroment)!
+        .scheme,
+      enviroments,
       settings: _settings,
     }),
-    [_settings, scheme]
+    [_settings, enviroments]
   );
   return (
     <PathfinderContext.Provider value={value}>

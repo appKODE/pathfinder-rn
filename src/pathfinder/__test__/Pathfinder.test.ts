@@ -3,8 +3,13 @@ import dev from './dnevnik.dev.json';
 
 describe('pathfinder', function () {
   const pathfinder = Pathfinder.create({
-    //@ts-ignore
-    scheme: dev,
+    enviroments: [
+      {
+        name: 'dev',
+        //@ts-ignore
+        scheme: dev,
+      },
+    ],
     settings: {
       mockServer: {
         domain: 'https://127.0.0.1:3100',
@@ -15,6 +20,7 @@ describe('pathfinder', function () {
           __dynamic: false,
         },
       },
+      enviroment: 'dev',
     },
   });
 
