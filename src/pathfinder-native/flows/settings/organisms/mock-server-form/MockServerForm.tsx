@@ -4,12 +4,19 @@ import { usePathfinder } from '../../../../../pathfinder-react';
 import { Layout, TextInput } from '../../../../ui/atoms';
 
 export const MockServerForm: React.FC = () => {
-  const pathfinder = usePathfinder();
+  const { pathfinder, settings } = usePathfinder();
   return (
     <Layout.Cal>
       <TextInput
-        value={pathfinder.settings.mockServer?.domain}
-        onChangeText={() => {}}
+        value={settings.mockServer?.domain}
+        onChangeText={(domain) => {
+          pathfinder.updateMockServerSettings((lastState) => ({
+            ...lastState,
+            domain,
+          }));
+        }}
+        label="Mock server url"
+        description={`Autosave enabled\nExample: http://127.0.0.1:3100`}
       />
     </Layout.Cal>
   );

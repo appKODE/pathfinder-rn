@@ -54,7 +54,7 @@ const PathfinderPure: React.FC<Props> = ({ settings, ...props }) => {
           onChangeState={onChangeSettings}
           settings={savedSettings}
         >
-          <PathResolver />
+          <PathResolver devMode={props.devMode} />
           <App />
         </PathfinderProvider>
       )}

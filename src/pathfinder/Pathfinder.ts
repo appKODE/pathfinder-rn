@@ -25,12 +25,14 @@ type Template = {
   delete?: MethodObject;
 };
 
+export type TMockServerSettings = {
+  domain: string;
+  headers: Record<string, string>;
+  queryParams: Record<string, string | number | boolean>;
+};
+
 export type TPathfinderSettings = {
-  mockServer?: {
-    domain: string;
-    headers: Record<string, string>;
-    queryParams: Record<string, string | number | boolean>;
-  };
+  mockServer?: TMockServerSettings;
   paths: Record<string, Template>;
 };
 
@@ -140,8 +142,25 @@ export class Pathfinder {
     this._settings.paths[template][method] = cb(
       this._settings.paths[template][method]!
     );
-    if (this._listeners.update_settings) {
-      this._listeners.update_settings({ ...this._settings });
+    this.sendEvent('update_settings', { ...this._settings });
+  }
+
+  public updateMockServerSettings(
+    cb: (lastState: TMockServerSettings) => TMockServerSettings
+  ) {
+    this._settings.mockServer = cb(
+      this._settings.mockServer || {
+        domain: '',
+        headers: {},
+        queryParams: {},
+      }
+    );
+    this.sendEvent('update_settings', { ...this._settings });
+  }
+
+  private sendEvent(event: 'update_settings', data: any) {
+    if (this._listeners[event]) {
+      this._listeners[event](data);
     }
   }
 

@@ -13,7 +13,7 @@ type Props = PathItemObject & {
 
 const styles = StyleSheet.create({
   root: {
-    paddingHorizontal: 15,
+    paddingHorizontal: 16,
     paddingVertical: 5,
   },
   content: {
