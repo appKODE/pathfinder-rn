@@ -27,7 +27,7 @@ export const PathfinderProvider: React.FC<TPathfinderProviderProps> = ({
       'update_settings',
       (newState) => {
         if (devMode) {
-          console.log(newState);
+          console.log('Pathfinder - set state:', newState);
         }
         setSettings(newState);
         onChangeState(newState);
