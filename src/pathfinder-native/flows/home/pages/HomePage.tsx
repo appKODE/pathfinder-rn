@@ -5,7 +5,7 @@ import { ApiListItem } from '../organisms';
 import { usePathfinder } from '../../../../pathfinder-react';
 import { Layout, TextInput } from '../../../ui/atoms';
 
-export const PathfinderPage: React.FC = () => {
+export const HomePage: React.FC = () => {
   const pathfinder = usePathfinder();
   const [searchQuery, setSearchQuery] = useState('');
   const [shownDetailsID, setShowDetailsID] = useState<string | null>(null);

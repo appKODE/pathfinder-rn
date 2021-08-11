@@ -1,1 +1,0 @@
-export { PathfinderPage } from './pages';
