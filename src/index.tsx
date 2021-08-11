@@ -1,47 +1,20 @@
-import React, { useCallback, useState } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { useState } from 'react';
 
+import { App } from './pathfinder-native/App';
 import DeepLink from './pathfinder-native/features/deeplink/DeepLink';
 import DevtoolsDeeplink from './pathfinder-native/features/deeplink/deeplinks/DevtoolsDeeplink';
+import { PathResolver } from './pathfinder-native/features/path-resolver/PathResolver';
+import { usePeristSettings } from './pathfinder-native/features/persist-settings';
 import {
   PathfinderProvider,
   TPathfinderProviderProps,
-  TPathfinderSettings,
 } from './pathfinder-react';
-import { PathResolver } from './pathfinder-native/features/path-resolver/PathResolver';
-import { App } from './pathfinder-native';
 
-const STORAGE_KEY = '@pathfinder/settings';
+export type TPathfinderProps = Omit<TPathfinderProviderProps, 'onChangeState'>;
 
-type Props = Omit<TPathfinderProviderProps, 'onChangeState'>;
-
-const PathfinderPure: React.FC<Props> = ({ settings, ...props }) => {
+const PathfinderPure: React.FC<TPathfinderProps> = ({ settings, ...props }) => {
   const [enablePathfinder, setEnablePathfinderState] = useState(__DEV__);
-  const [savedSettings, setNewSettings] = useState<
-    Partial<TPathfinderSettings> | undefined
-  >(undefined);
-
-  const onChangeSettings = useCallback((newSettings: TPathfinderSettings) => {
-    AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(newSettings));
-  }, []);
-
-  React.useEffect(() => {
-    const init = async () => {
-      try {
-        const result = await AsyncStorage.getItem(STORAGE_KEY);
-        if (result) {
-          setNewSettings(JSON.parse(result));
-        } else {
-          setNewSettings(settings);
-        }
-      } catch (e) {
-        setNewSettings(settings);
-      }
-    };
-    if (savedSettings === undefined) {
-      init();
-    }
-  }, [savedSettings, settings]);
+  const [savedSettings, onChangeSettings] = usePeristSettings(settings);
 
   return (
     <>
@@ -62,7 +35,7 @@ const PathfinderPure: React.FC<Props> = ({ settings, ...props }) => {
   );
 };
 
-const Pathfinder: React.FC<Props> = ({ children, ...props }) => {
+const Pathfinder: React.FC<TPathfinderProps> = ({ children, ...props }) => {
   return (
     <>
       {children}

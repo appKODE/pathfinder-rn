@@ -1,13 +1,17 @@
 import React from 'react';
+
 import type {
   Pathfinder,
   TPathfinderSettings,
-  TPathfinderProps,
+  TScheme,
+  TEnviroment,
 } from '../pathfinder';
 
-export interface IPathfinderContext extends TPathfinderProps {
+export interface IPathfinderContext {
   pathfinder: Pathfinder;
   settings: TPathfinderSettings;
+  scheme: TScheme;
+  enviroments: TEnviroment[];
 }
 
 export const PathfinderContext = React.createContext<IPathfinderContext>(

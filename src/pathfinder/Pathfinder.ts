@@ -32,23 +32,32 @@ export type TMockServerSettings = {
 };
 
 export type TPathfinderSettings = {
+  enviroment?: string;
   mockServer?: TMockServerSettings;
   paths: Record<string, Template>;
 };
 
-type ResolveParams = {
+type TResolveParams = {
   url: string;
   method: keyof Template;
   headers?: Record<string, string>;
 };
 
-type ResolveResult = {
+type TResolveResult = {
   url: string;
   headers: Record<string, string>;
 };
 
+export type TScheme = OpenAPIObject;
+
+export type TEnviroment = {
+  name: string;
+  description?: string;
+  scheme: TScheme;
+};
+
 export type TPathfinderProps = {
-  scheme: OpenAPIObject;
+  enviroments: TEnviroment[];
   settings?: Partial<TPathfinderSettings>;
 };
 
@@ -61,23 +70,31 @@ export class Pathfinder {
     return new Pathfinder(config);
   }
 
-  private _scheme: OpenAPIObject;
+  private _enviroments: TEnviroment[] = [];
   private _settings: TPathfinderSettings = initSettings;
   private _listeners: Record<
     string,
     (newSettings: TPathfinderSettings) => void
   > = {};
 
-  constructor({ scheme, settings }: TPathfinderProps) {
-    this._scheme = scheme;
+  constructor({ enviroments, settings }: TPathfinderProps) {
+    this._enviroments = enviroments;
+
+    const currentEnviroment = settings?.enviroment || enviroments[0]?.name;
+
     this._settings = {
       ...initSettings,
       ...settings,
+      enviroment: currentEnviroment,
     };
   }
 
-  public resolve({ url, method, headers = {} }: ResolveParams): ResolveResult {
-    const template = Object.keys(this._scheme.paths).find(
+  public resolve({
+    url,
+    method,
+    headers = {},
+  }: TResolveParams): TResolveResult {
+    const template = Object.keys(this.getScheme().paths).find(
       compareUrlWithTemplate(url)
     );
 
@@ -90,7 +107,7 @@ export class Pathfinder {
       return { url, headers };
     }
 
-    const templateObject = this._scheme.paths[template];
+    const templateObject = this.getScheme().paths[template];
 
     if (!templateObject[method]) {
       return { url, headers };
@@ -114,7 +131,9 @@ export class Pathfinder {
   }
 
   public getScheme() {
-    return this._scheme;
+    return this._enviroments.find(
+      (env) => env.name === this._settings.enviroment
+    )!.scheme;
   }
 
   public getAllSettings() {
@@ -155,6 +174,11 @@ export class Pathfinder {
         queryParams: {},
       }
     );
+    this.sendEvent('update_settings', { ...this._settings });
+  }
+
+  public setEnviroment(enviroment: string) {
+    this._settings.enviroment = enviroment;
     this.sendEvent('update_settings', { ...this._settings });
   }
 
