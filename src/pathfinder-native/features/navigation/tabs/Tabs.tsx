@@ -24,7 +24,7 @@ export const Tabs: React.FC = ({ children }) => {
   const [selectedRoute, setRoute] = useState<string>(
     routes?.length ? routes[0].routeName : ''
   );
-  console.log(selectedRoute);
+
   return (
     <View style={styles.root}>
       <View style={styles.container}>

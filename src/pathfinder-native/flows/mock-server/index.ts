@@ -1,1 +1,0 @@
-export { SettingsMockServerPage } from './pages';
