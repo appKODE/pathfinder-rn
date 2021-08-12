@@ -1,6 +1,6 @@
 {
   "name": "react-native-pathfinder",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "description": "pathfinder",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -10,13 +10,9 @@
   "files": [
     "src",
     "lib",
-    "android",
-    "ios",
     "cpp",
     "react-native-pathfinder.podspec",
     "!lib/typescript/example",
-    "!android/build",
-    "!ios/build",
     "!**/__tests__",
     "!**/__fixtures__",
     "!**/__mocks__"
@@ -28,7 +24,6 @@
     "prepare": "bob build",
     "release": "release-it",
     "example": "yarn --cwd example",
-    "pods": "cd example && pod-install --quiet",
     "bootstrap": "yarn example && yarn && yarn pods"
   },
   "keywords": [
