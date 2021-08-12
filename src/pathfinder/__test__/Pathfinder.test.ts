@@ -1,5 +1,6 @@
 import { Pathfinder } from '../Pathfinder';
 import dev from './dnevnik.dev.json';
+import prod from './dnevnik.prod.json';
 
 describe('pathfinder', function () {
   const pathfinder = Pathfinder.create({
@@ -8,6 +9,11 @@ describe('pathfinder', function () {
         name: 'dev',
         //@ts-ignore
         scheme: dev,
+      },
+      {
+        name: 'prod',
+        //@ts-ignore
+        scheme: prod,
       },
     ],
     settings: {
@@ -151,6 +157,34 @@ describe('pathfinder', function () {
     ).toEqual({
       url: 'https://dnevnik-dev.mos.ru/mobile/api/events/1',
       headers: {},
+    });
+  });
+
+  it('change enviroment', function () {
+    pathfinder.setEnviroment('prod');
+    expect(pathfinder.getAllSettings().enviroment).toEqual('prod');
+  });
+
+  it('should getting mock url for prod', function () {
+    pathfinder.updateTemplateSettings(
+      '/mobile/api/v1.0/school_info',
+      'get',
+      (lastState) => ({
+        ...lastState,
+        enabledMock: true,
+        enabled: true,
+      })
+    );
+    expect(
+      pathfinder.resolve({
+        url: 'https://dnevnik.mos.ru/mobile/api/v1.0/school_info?school_id=7885&class_unit_id=539090',
+        method: 'get',
+      })
+    ).toEqual({
+      url: 'https://127.0.0.1:3100/mobile/api/v1.0/school_info?school_id=7885&class_unit_id=539090&__dynamic=false',
+      headers: {
+        Accept: 'application/json',
+      },
     });
   });
 });

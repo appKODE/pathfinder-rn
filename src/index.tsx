@@ -10,10 +10,21 @@ import {
   TPathfinderProviderProps,
 } from './pathfinder-react';
 
-export type TPathfinderProps = Omit<TPathfinderProviderProps, 'onChangeState'>;
+export type TPathfinderProps = Omit<
+  TPathfinderProviderProps,
+  'onChangeState'
+> & {
+  autostartForDev?: boolean;
+};
 
-const PathfinderPure: React.FC<TPathfinderProps> = ({ settings, ...props }) => {
-  const [enablePathfinder, setEnablePathfinderState] = useState(__DEV__);
+const PathfinderPure: React.FC<TPathfinderProps> = ({
+  settings,
+  autostartForDev,
+  ...props
+}) => {
+  const [enablePathfinder, setEnablePathfinderState] = useState(
+    autostartForDev && __DEV__
+  );
   const [savedSettings, onChangeSettings] = usePeristSettings(settings);
 
   return (
