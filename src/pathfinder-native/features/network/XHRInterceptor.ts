@@ -26,8 +26,8 @@ class Interceptor {
     };
   }
 
-  add(cb: SendCallback) {
-    XHRInterceptorBase.setSendCallback((_: any, xhr: any) => {
+  addEventListener(cb: SendCallback) {
+    const callback = (_: any, xhr: any) => {
       const { method, url, headers } =
         cb({
           method: xhr._method,
@@ -37,10 +37,14 @@ class Interceptor {
       xhr._method = method || xhr._method;
       xhr._url = url || xhr._url;
       xhr._headers = headers || xhr._headers;
-    });
+    };
+    XHRInterceptorBase.setSendCallback(callback);
+    return {
+      remove: () => this.remove(callback),
+    };
   }
 
-  remove(cb: SendCallback) {
+  protected remove(cb: OriginalSendCallback) {
     const index = this._sendCallbacks.findIndex((callback) => callback === cb);
     if (index !== -1) {
       this._sendCallbacks.splice(index, 1);

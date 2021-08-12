@@ -29,9 +29,9 @@ export const PathResolver: React.FC<{ devMode?: boolean }> = ({ devMode }) => {
       };
     };
 
-    XHRInterceptor.add(interceptor);
+    const listener = XHRInterceptor.addEventListener(interceptor);
     return () => {
-      XHRInterceptor.remove(interceptor);
+      listener.remove();
     };
   }, [pathfinder, devMode]);
 
