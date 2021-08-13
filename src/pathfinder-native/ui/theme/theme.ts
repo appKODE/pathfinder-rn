@@ -15,6 +15,7 @@ export const theme = {
       success: '#10a54a',
       info: '#0f6ab4',
       warn: '#c5862b',
+      inactive: '#ccc',
     },
   },
 };
