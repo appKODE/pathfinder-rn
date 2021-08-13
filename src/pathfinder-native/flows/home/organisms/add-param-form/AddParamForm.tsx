@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { AddButton } from '../../../../ui/molecules';
-import { Button, TextInput, Typography } from '../../../../ui/atoms';
+import { Button, TextInput, Typography, Layout } from '../../../../ui/atoms';
 
 const styles = StyleSheet.create({
   root: {
@@ -42,14 +42,20 @@ export const AddParamForm: React.FC<Props> = ({ onSubmit }) => {
       {visible && (
         <View style={styles.root}>
           <Typography variant={'h5'} textAlign="center">
-            Добавить параметр
+            Create new parameter
           </Typography>
-          <TextInput label={'Name'} value={name} onChangeText={setName} />
+          <TextInput
+            label={'Name'}
+            value={name}
+            onChangeText={setName}
+            autoFocus
+          />
           <TextInput label={'Value'} value={value} onChangeText={setValue} />
           <View style={styles.footer}>
-            <Button onPress={submit}>Добавить</Button>
+            <Button onPress={submit}>Create</Button>
+            <Layout.Cal spacing={1} />
             <Button color="danger" onPress={cancel}>
-              Отмена
+              Cancel
             </Button>
           </View>
         </View>

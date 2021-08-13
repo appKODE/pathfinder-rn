@@ -3,13 +3,17 @@ import { ScrollView } from 'react-native';
 
 import { MockServerForm } from '../../organisms';
 import { Layout } from '../../../../ui/atoms';
+import { EnviromentSelector } from '../../../../features/enviroment-selector';
 
 export const SettingsPage: React.FC = () => {
   return (
-    <ScrollView>
-      <Layout.Cal spacing={{ left: 2, right: 2 }}>
-        <MockServerForm />
-      </Layout.Cal>
-    </ScrollView>
+    <Layout.Cal>
+      <EnviromentSelector />
+      <ScrollView>
+        <Layout.Cal spacing={2}>
+          <MockServerForm />
+        </Layout.Cal>
+      </ScrollView>
+    </Layout.Cal>
   );
 };

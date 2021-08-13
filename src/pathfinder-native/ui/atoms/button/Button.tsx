@@ -5,10 +5,11 @@ import {
   TouchableOpacityProps,
   Text,
 } from 'react-native';
+import { theme } from '../../theme';
 
 const styles = StyleSheet.create({
   root: {
-    backgroundColor: '#e7f0f7',
+    backgroundColor: theme.colors.background.info,
     borderRadius: 8,
     justifyContent: 'center',
     alignItems: 'center',
@@ -19,23 +20,20 @@ const styles = StyleSheet.create({
   icon: {
     width: 25,
     height: 25,
-    tintColor: '#0f6ab4',
+    tintColor: theme.colors.foreground.info,
     transform: [{ rotate: '45deg' }],
   },
   primary: {
-    backgroundColor: '#e7f0f7',
+    backgroundColor: theme.colors.background.info,
   },
   danger: {
-    backgroundColor: '#f5e8e8',
-  },
-  title: {
-    backgroundColor: '#f5e8e8',
+    backgroundColor: theme.colors.background.danger,
   },
   dangerText: {
-    color: '#a41e22',
+    color: theme.colors.foreground.danger,
   },
   primaryText: {
-    color: '#0f6ab4',
+    color: theme.colors.foreground.info,
   },
 });
 

@@ -4,7 +4,7 @@ import { FlatList } from 'react-native';
 import { ApiListItem } from '../organisms';
 import { usePathfinder } from '../../../../pathfinder-react';
 import { Layout, TextInput } from '../../../ui/atoms';
-import { EnviromentSelector } from '../organisms';
+import { EnviromentSelector } from '../../../features/enviroment-selector';
 
 export const HomePage: React.FC = () => {
   const pathfinder = usePathfinder();

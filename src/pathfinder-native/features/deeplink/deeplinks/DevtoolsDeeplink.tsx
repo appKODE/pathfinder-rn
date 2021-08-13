@@ -1,4 +1,5 @@
 import type React from 'react';
+
 import useDeepLink from '../useDeepLink';
 import type { TDeepLinkHandlerParams } from '../types';
 
@@ -20,7 +21,7 @@ const DevtoolsDeeplink: React.FC<Props> = ({ onShownStateChange }) => {
   };
 
   const execute = (params: TDeepLinkHandlerParams) => {
-    switch (params.mapPath[1]) {
+    switch (params.mapPath[1].trim()) {
       case 'open':
         open();
         break;

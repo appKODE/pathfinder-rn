@@ -27,7 +27,7 @@ const getPaddings = (spacing?: TSpacing) => {
 
   if (typeof spacing === 'number') {
     return {
-      paddings: spacing * 8,
+      padding: spacing * 8,
     };
   }
 

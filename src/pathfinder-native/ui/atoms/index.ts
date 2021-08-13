@@ -1,4 +1,4 @@
-export { CloseIcon } from './icons/CloseIcon';
+export * from './icon/Icon';
 export { MethodBadge } from './method-badge/MethodBadge';
 export { Layout } from './layout/Layout';
 export { TextInput } from './inputs';

@@ -28,6 +28,7 @@ export const unionParameters = (
     if (!result[parameter.name + parameter.in]) {
       result[parameter.name + parameter.in] = {
         ...parameter,
+        custom: true,
       };
     }
   });

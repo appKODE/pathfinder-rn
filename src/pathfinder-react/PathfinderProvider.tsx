@@ -19,7 +19,7 @@ export const PathfinderProvider: React.FC<TPathfinderProviderProps> = ({
   onChangeState,
 }) => {
   const instance = useRef(Pathfinder.create({ enviroments, settings }));
-  const [_settings, setSettings] = useState<TPathfinderSettings>(
+  const [_settings, setSettings] = useState<Required<TPathfinderSettings>>(
     instance.current.getAllSettings()
   );
   React.useEffect(() => {
