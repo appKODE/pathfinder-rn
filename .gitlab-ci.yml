@@ -1,0 +1,17 @@
+before_script:
+  - chmod +x ./scripts/update-version.sh
+
+services:
+  - docker:dind
+
+stages:
+  - release
+
+release:
+  stage: release
+  image: node:dubnium
+  only:
+    - /^release$/
+  tags: [frontend]
+  script:
+    - ./scripts/update-version.sh
