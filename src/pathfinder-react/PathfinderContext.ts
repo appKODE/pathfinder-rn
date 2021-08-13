@@ -9,7 +9,7 @@ import type {
 
 export interface IPathfinderContext {
   pathfinder: Pathfinder;
-  settings: TPathfinderSettings;
+  settings: Required<TPathfinderSettings>;
   scheme: TScheme;
   enviroments: TEnviroment[];
 }

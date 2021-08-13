@@ -7,12 +7,23 @@ import prod from '../dnevnik.prod.json';
 
 const settings: TPathfinderProps['settings'] = {
   mockServer: {
-    domain: 'http://127.0.0.1:3100',
-    headers: {
-      Accept: 'application/json',
+    dev: {
+      domain: 'https://127.0.0.1:3100',
+      headers: {
+        Accept: 'application/json',
+      },
+      queryParams: {
+        __dynamic: false,
+      },
     },
-    queryParams: {
-      __dynamic: false,
+    prod: {
+      domain: 'https://127.0.0.1:3100',
+      headers: {
+        Accept: 'application/json',
+      },
+      queryParams: {
+        __dynamic: false,
+      },
     },
   },
   enviroment: 'dev',
@@ -48,7 +59,12 @@ export default function App() {
   }, []);
 
   return (
-    <Pathfinder enviroments={enviroments} settings={settings} devMode>
+    <Pathfinder
+      enviroments={enviroments}
+      settings={settings}
+      devMode
+      autostartForDev
+    >
       <View style={styles.container}>
         <Button title="test" onPress={request} />
       </View>

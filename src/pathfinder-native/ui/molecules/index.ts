@@ -1,3 +1,3 @@
-export { CloseButton } from './close-button/CloseButton';
+export { IconButton } from './icon-button/IconButton';
 export { AddButton } from './add-button/AddButton';
 export { SegmentControl } from './segment-control/SegmentControl';

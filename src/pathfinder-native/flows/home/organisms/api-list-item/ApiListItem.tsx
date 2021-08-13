@@ -36,17 +36,20 @@ export const ApiListItem: React.FC<Props> = ({
       {methods
         .filter((method) => Boolean(props[method]))
         .map((method) => {
+          const isFocused = shownDetailsID === `${path}${method}`;
           return (
             <Layout.Cal key={method + path} style={styles.root}>
               <TouchableOpacity onPress={() => onPress(path, method)}>
                 <Layout.Row alignItems="center">
                   <MethodBadge method={method}>{method}</MethodBadge>
                   <Layout.Cal style={styles.content}>
-                    <Typography variant="body1">{path}</Typography>
+                    <Typography variant={isFocused ? 'body2' : 'body1'}>
+                      {path}
+                    </Typography>
                   </Layout.Cal>
                 </Layout.Row>
               </TouchableOpacity>
-              {shownDetailsID === `${path}${method}` && (
+              {isFocused && (
                 <ApiDetails method={method} path={path} {...props[method]!} />
               )}
             </Layout.Cal>

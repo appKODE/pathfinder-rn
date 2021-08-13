@@ -14,8 +14,8 @@ type Props = TextInputProps & {
 
 const styles = StyleSheet.create({
   root: {
-    width: '100%',
     paddingVertical: 4,
+    flexGrow: 1,
   },
   label: {
     fontSize: 12,
@@ -34,6 +34,7 @@ const styles = StyleSheet.create({
     borderBottomColor: 'gray',
     margin: 0,
     padding: 0,
+    width: '100%',
   },
 });
 

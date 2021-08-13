@@ -73,6 +73,24 @@ export const ApiDetails: React.FC<Props> = ({
       });
     };
 
+  const onDelete = (type: ParameterObject['in'], name: string) => () => {
+    pathfinder.updateTemplateSettings(path, method, (lastState) => {
+      const parameters = [...(lastState.parameters || [])];
+      const index = parameters.findIndex(
+        (parameter) => parameter.in === type && parameter.name === name
+      );
+
+      if (index !== -1) {
+        parameters.splice(index, 1);
+      }
+
+      return {
+        ...lastState,
+        parameters,
+      };
+    });
+  };
+
   const settings = pathfinder.getSettings(path, method);
   const enabledMock = Boolean(settings?.enabledMock);
   const enabled = Boolean(settings?.enabled);
@@ -103,6 +121,7 @@ export const ApiDetails: React.FC<Props> = ({
             pathfinder.updateTemplateSettings(path, method, (lastState) => ({
               ...lastState,
               enabledMock: value,
+              enabled: !lastState.enabled && value ? true : lastState.enabled,
             }))
           }
           value={enabledMock}
@@ -118,6 +137,8 @@ export const ApiDetails: React.FC<Props> = ({
               path={path}
               value={header.value}
               onChange={onChangeValue(header.in, header.name)}
+              onDelete={onDelete(header.in, header.name)}
+              withDelete={header.custom}
             />
           );
         })}
@@ -133,6 +154,8 @@ export const ApiDetails: React.FC<Props> = ({
               path={path}
               value={pathParam.value}
               onChange={onChangeValue(pathParam.in, pathParam.name)}
+              onDelete={onDelete(pathParam.in, pathParam.name)}
+              withDelete={pathParam.custom}
             />
           );
         })}
@@ -148,6 +171,8 @@ export const ApiDetails: React.FC<Props> = ({
               path={path}
               value={queryParam.value}
               onChange={onChangeValue(queryParam.in, queryParam.name)}
+              onDelete={onDelete(queryParam.in, queryParam.name)}
+              withDelete={queryParam.custom}
             />
           );
         })}

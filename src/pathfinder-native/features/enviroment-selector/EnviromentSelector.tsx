@@ -1,7 +1,7 @@
 import React from 'react';
-import { usePathfinder } from '../../../../../pathfinder-react';
+import { usePathfinder } from '../../../pathfinder-react';
 
-import { SegmentControl } from '../../../../ui/molecules';
+import { SegmentControl } from '../../ui/molecules';
 
 export const EnviromentSelector: React.FC = () => {
   const { pathfinder, settings, enviroments } = usePathfinder();

@@ -8,7 +8,7 @@ export const MockServerForm: React.FC = () => {
   return (
     <Layout.Cal>
       <TextInput
-        value={settings.mockServer?.domain}
+        value={settings.mockServer[settings.enviroment].domain}
         onChangeText={(domain) => {
           pathfinder.updateMockServerSettings((lastState) => ({
             ...lastState,
