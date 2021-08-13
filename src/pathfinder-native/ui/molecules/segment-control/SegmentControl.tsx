@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
   contentContainer: {
     flexDirection: 'row',
     backgroundColor: '#dedede',
-    borderRadius: 6,
+    borderRadius: 8,
     padding: 2,
     overflow: 'hidden',
   },

@@ -11,12 +11,19 @@ const styles = StyleSheet.create({
   },
 });
 
-type Props = {
+export type TTabBarProps = Pick<
+  TTabBarButtonProps,
+  'activeColor' | 'inactiveColor'
+> & {
   routes: TTabBarButtonProps[];
   currentRoute: string;
 };
 
-export const TabBar: React.FC<Props> = ({ routes, currentRoute }) => {
+export const TabBar: React.FC<TTabBarProps> = ({
+  routes,
+  currentRoute,
+  ...tabBarButtonProps
+}) => {
   return (
     <View style={styles.root}>
       {routes.map((route) => {
@@ -24,6 +31,7 @@ export const TabBar: React.FC<Props> = ({ routes, currentRoute }) => {
           <TabBarButton
             key={route.routeName}
             focused={currentRoute === route.routeName}
+            {...tabBarButtonProps}
             {...route}
           />
         );

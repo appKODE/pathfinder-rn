@@ -25,12 +25,6 @@ const styles = StyleSheet.create({
     color: '#686868',
     marginTop: 2,
   },
-  labelFocused: {
-    color: '#0f6ab4',
-  },
-  iconFocused: {
-    tintColor: '#0f6ab4',
-  },
 });
 
 export type TTabBarButtonProps = {
@@ -38,6 +32,8 @@ export type TTabBarButtonProps = {
   icon: ImageSourcePropType;
   routeName: string;
   focused?: boolean;
+  activeColor?: string;
+  inactiveColor?: string;
   onPress: (routeName: string) => void;
 };
 
@@ -46,16 +42,26 @@ export const TabBarButton: React.FC<TTabBarButtonProps> = ({
   label,
   routeName,
   focused,
+  activeColor,
+  inactiveColor,
   onPress,
 }) => {
   return (
     <TouchableOpacity style={styles.root} onPress={() => onPress(routeName)}>
       <Image
         source={icon}
-        style={[styles.icon, focused && styles.iconFocused]}
+        style={[
+          styles.icon,
+          !!inactiveColor && { tintColor: inactiveColor },
+          focused && !!activeColor && { tintColor: activeColor },
+        ]}
       />
       <Text
-        style={[styles.label, focused && styles.labelFocused]}
+        style={[
+          styles.label,
+          !!inactiveColor && { color: inactiveColor },
+          focused && !!activeColor && { color: activeColor },
+        ]}
         allowFontScaling={false}
       >
         {label}

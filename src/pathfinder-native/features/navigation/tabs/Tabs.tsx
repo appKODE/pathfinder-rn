@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import { TabBar } from './TabBar';
+import { TabBar, TTabBarProps } from './TabBar';
 
 const styles = StyleSheet.create({
   root: {
@@ -12,7 +12,9 @@ const styles = StyleSheet.create({
   },
 });
 
-export const Tabs: React.FC = ({ children }) => {
+export type TTabsProps = Partial<TTabBarProps>;
+
+export const Tabs: React.FC<TTabsProps> = ({ children, ...tabBarProps }) => {
   const routes: any[] =
     React.Children.map(children, (child: any) => ({
       label: child.props.label,
@@ -32,7 +34,7 @@ export const Tabs: React.FC = ({ children }) => {
           (child: any) => child.props.routeName === selectedRoute
         )}
       </View>
-      <TabBar routes={routes} currentRoute={selectedRoute} />
+      <TabBar {...tabBarProps} routes={routes} currentRoute={selectedRoute} />
     </View>
   );
 };

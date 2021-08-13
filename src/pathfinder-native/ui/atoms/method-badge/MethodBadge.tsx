@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text } from 'react-native';
+import { theme } from '../../theme';
 
 const styles = StyleSheet.create({
   common: {
@@ -13,16 +14,16 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   get: {
-    backgroundColor: '#0f6ab4',
+    backgroundColor: theme.colors.foreground.info,
   },
   post: {
-    backgroundColor: '#10a54a',
+    backgroundColor: theme.colors.foreground.success,
   },
   put: {
-    backgroundColor: '#c5862b',
+    backgroundColor: theme.colors.foreground.warn,
   },
   delete: {
-    backgroundColor: '#a41e22',
+    backgroundColor: theme.colors.foreground.danger,
   },
 });
 
@@ -31,5 +32,9 @@ type Props = {
 };
 
 export const MethodBadge: React.FC<Props> = ({ children, method }) => {
-  return <Text style={[styles.common, styles[method]]}>{children}</Text>;
+  return (
+    <Text style={[styles.common, styles[method]]} allowFontScaling={false}>
+      {children}
+    </Text>
+  );
 };
