@@ -40,14 +40,14 @@ const enviroments: TPathfinderProps['enviroments'] = [
 export default function App() {
 
   return (
-		<Pathfinder
+    <Pathfinder
       enviroments={enviroments}
       settings={settings}
       devMode
       autostartForDev
     >
     	<YourApp />
-		</Pathfinder>
+    </Pathfinder>
   );
 }
 
@@ -68,7 +68,7 @@ export default function App() {
 ```ts
 
 type TEnviroment = {
-	  // the unique name of the environment, for example 'prod', 'dev', etc...
+    // the unique name of the environment, for example 'prod', 'dev', etc...
     name: string;
     // OpenApi scheme
     scheme: OpenAPIObject;
@@ -88,16 +88,16 @@ type TMockServerSettings = {
 };
 
 type TPathfinderSettings = {
-	  // name of environment
+    // name of environment
     enviroment?: string;
     mockServer?: TMockServerSettings;
-		/* {
-			['/profile/{id_profile}']: {
-				get: {
-					...
-				}
-			}
-		 } */
+    /* {
+      ['/profile/{id_profile}']: {
+        get: {
+          ...
+        }
+      }
+    } */
     paths?: Record<string, Template>;
 };
 
