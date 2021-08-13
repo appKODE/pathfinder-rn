@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text, StyleSheet, TextStyle, TextProps } from 'react-native';
+import { theme } from '../../theme';
 
 type TFontType =
   | 'h1'
@@ -48,19 +49,21 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   common: {
-    color: '#343434',
+    color: theme.colors.foreground.default,
   },
 });
 
 export type TTypographyProps = TextProps & {
   variant?: TFontType;
   textAlign?: TextStyle['textAlign'];
+  color?: keyof typeof theme.colors.foreground;
 };
 
 export const Typography: React.FC<TTypographyProps> = ({
   children,
   variant,
   textAlign = 'left',
+  color,
   ...props
 }) => {
   return (
@@ -71,6 +74,7 @@ export const Typography: React.FC<TTypographyProps> = ({
         styles.common,
         variant && styles[variant],
         { textAlign },
+        color && { color: theme.colors.foreground[color] },
         props.style,
       ]}
     >

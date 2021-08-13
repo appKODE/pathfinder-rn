@@ -18,6 +18,7 @@ type RowProps = ViewProps & {
   alignItems?: ViewStyle['alignItems'];
   justifyContent?: ViewStyle['justifyContent'];
   spacing?: TSpacing;
+  flex?: number;
 };
 
 const getPaddings = (spacing?: TSpacing) => {
@@ -43,13 +44,14 @@ const Row: React.FC<RowProps> = ({
   alignItems,
   justifyContent,
   spacing,
+  flex,
   ...props
 }) => (
   <View
     {...props}
     style={[
       styles.row,
-      { alignItems, justifyContent },
+      { alignItems, justifyContent, flex },
       getPaddings(spacing),
       props.style,
     ]}
@@ -60,13 +62,14 @@ const Cal: React.FC<RowProps> = ({
   alignItems,
   justifyContent,
   spacing,
+  flex,
   ...props
 }) => (
   <View
     {...props}
     style={[
       styles.cal,
-      { alignItems, justifyContent },
+      { alignItems, justifyContent, flex },
       getPaddings(spacing),
       props.style,
     ]}
