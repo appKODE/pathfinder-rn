@@ -1,6 +1,6 @@
 {
   "name": "react-native-pathfinder",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "pathfinder",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
