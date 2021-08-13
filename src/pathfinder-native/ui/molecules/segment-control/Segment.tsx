@@ -5,7 +5,7 @@ const { width } = Dimensions.get('window');
 const styles = StyleSheet.create({
   root: {
     paddingHorizontal: 5,
-    paddingVertical: 3,
+    paddingVertical: 5,
     justifyContent: 'center',
     alignItems: 'center',
     width: width / 4,
