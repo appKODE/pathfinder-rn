@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.4](https://git.appkode.ru/ca/react-native-pathfinder/compare/v0.0.3...v0.0.4) (2021-08-16)
+
+
+### Bug Fixes
+
+* **asyncstorage:** change work with async storage ([d483a57](https://git.appkode.ru/ca/react-native-pathfinder/commit/d483a57eacf13ce74ca12fa85f985ba84728bd51))
+
 ### [0.0.3](https://git.appkode.ru/ca/react-native-pathfinder/compare/v0.0.2...v0.0.3) (2021-08-16)
 
 ### 0.0.2 (2021-08-13)
