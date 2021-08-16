@@ -1,7 +1,8 @@
 import * as React from 'react';
-
 import { StyleSheet, View, Button } from 'react-native';
 import Pathfinder, { TPathfinderProps } from 'react-native-pathfinder';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import dev from '../dnevnik.dev.json';
 import prod from '../dnevnik.prod.json';
 
@@ -62,6 +63,7 @@ export default function App() {
     <Pathfinder
       enviroments={enviroments}
       settings={settings}
+      asyncStorage={AsyncStorage}
       devMode
       autostartForDev
     >

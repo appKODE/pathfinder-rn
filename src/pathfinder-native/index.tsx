@@ -10,18 +10,26 @@ import {
   PathfinderProvider,
   TPathfinderProviderProps,
 } from '../pathfinder-react';
+import type { TAsyncStorage } from './types';
 
 export type TPathfinderProps = Omit<
   TPathfinderProviderProps,
   'onChangeState'
 > & {
+  asyncStorage: TAsyncStorage;
   autostartForDev?: boolean;
 };
 
 const STORAGE_KEY_ENABLED_PATHFINDER = '@pathfinder-settings';
 
-const PathfinderPure: React.FC<TPathfinderProps> = ({ settings, ...props }) => {
-  const [savedSettings, onChangeSettings] = usePeristSettings(settings);
+const PathfinderPure: React.FC<TPathfinderProps> = ({
+  settings,
+  asyncStorage,
+  ...props
+}) => {
+  const [savedSettings, onChangeSettings] = usePeristSettings(settings, {
+    asyncStorage,
+  });
 
   if (savedSettings === undefined) {
     return null;
@@ -44,9 +52,12 @@ const Pathfinder: React.FC<TPathfinderProps> = ({
   ...props
 }) => {
   const [enablePathfinder, setEnablePathfinderState] = usePeristor(
-    STORAGE_KEY_ENABLED_PATHFINDER,
     {
       enabled: autostartForDev && __DEV__,
+    },
+    {
+      storageKey: STORAGE_KEY_ENABLED_PATHFINDER,
+      asyncStorage: props.asyncStorage,
     }
   );
 
