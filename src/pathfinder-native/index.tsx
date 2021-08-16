@@ -1,15 +1,15 @@
 import React, { useCallback } from 'react';
 
-import { App } from './pathfinder-native/App';
-import DeepLink from './pathfinder-native/features/deeplink/DeepLink';
-import DevtoolsDeeplink from './pathfinder-native/features/deeplink/deeplinks/DevtoolsDeeplink';
-import { PathResolver } from './pathfinder-native/features/path-resolver/PathResolver';
-import { usePeristSettings } from './pathfinder-native/features/persist-settings';
-import { usePeristor } from './pathfinder-native/features/persistor';
+import { App } from './App';
+import DeepLink from './features/deeplink/DeepLink';
+import DevtoolsDeeplink from './features/deeplink/deeplinks/DevtoolsDeeplink';
+import { PathResolver } from './features/path-resolver/PathResolver';
+import { usePeristSettings } from './features/persist-settings';
+import { usePeristor } from './features/persistor';
 import {
   PathfinderProvider,
   TPathfinderProviderProps,
-} from './pathfinder-react';
+} from '../pathfinder-react';
 
 export type TPathfinderProps = Omit<
   TPathfinderProviderProps,
