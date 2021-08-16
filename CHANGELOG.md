@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.5](https://git.appkode.ru/ca/react-native-pathfinder/compare/v0.0.4...v0.0.5) (2021-08-16)
+
+
+### Features
+
+* **enviroment:** added the ability to change the environment ([ffa7ce2](https://git.appkode.ru/ca/react-native-pathfinder/commit/ffa7ce20a877f23c008b288ba3e14017e9ccc364))
+
 ### [0.0.4](https://git.appkode.ru/ca/react-native-pathfinder/compare/v0.0.3...v0.0.4) (2021-08-16)
 
 
