@@ -1,15 +1,21 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
+
+import type { TAsyncStorage } from '../../../pathfinder-native/types';
+
+type TExtra = {
+  storageKey: string;
+  asyncStorage: TAsyncStorage;
+};
 
 export function usePeristor<T extends Object>(
-  storageKey: string,
-  initialValue: T
+  initialValue: T,
+  { asyncStorage, storageKey }: TExtra
 ): [T | null, (newSettings: T) => void] {
   const [value, setValue] = useState<T | null>(null);
-
+  const AsyncStorage = useRef(asyncStorage);
   const onChange = useCallback(
     (newValue: T) => {
-      AsyncStorage.setItem(storageKey, JSON.stringify(newValue));
+      AsyncStorage.current.setItem(storageKey, JSON.stringify(newValue));
       setValue(newValue);
     },
     [storageKey]
@@ -18,7 +24,7 @@ export function usePeristor<T extends Object>(
   React.useEffect(() => {
     const init = async () => {
       try {
-        const result = await AsyncStorage.getItem(storageKey);
+        const result = await AsyncStorage.current.getItem(storageKey);
         if (result) {
           setValue(JSON.parse(result));
         } else {
