@@ -27,10 +27,10 @@ const settings: TPathfinderProps['settings'] = {
       },
     },
   },
-  enviroment: 'dev',
+  environment: 'dev',
 };
 
-const enviroments: TPathfinderProps['enviroments'] = [
+const environments: TPathfinderProps['envirnoments'] = [
   {
     name: 'dev',
     scheme: dev,
@@ -41,7 +41,7 @@ export default function App() {
 
   return (
     <Pathfinder
-      enviroments={enviroments}
+      environments={environments}
       settings={settings}
       devMode
       autostartForDev
@@ -55,19 +55,20 @@ export default function App() {
 
 ## Props
 
-| prop name       | type                | description                                                            |
-| --------------- | ------------------- | ---------------------------------------------------------------------- |
-| enviroments     | TEnviroment[]       | List of OpenAPI specifications and metadata                            |
-| settings        | TPathfinderSettings | Mock server settings and initial state                                 |
-| devMode         | boolean             | Allows you to output information for developers to the console         |
-| autostartForDev | boolean             | Launches the `pathfinder` when the application is launched in dev mode |
+| prop name          | type                  | description                                                            |
+| ------------------ | --------------------- | ---------------------------------------------------------------------- |
+| enviroments        | TEnviroment[]         | List of OpenAPI specifications and metadata                            |
+| settings           | TPathfinderSettings   | Mock server settings and initial state                                 |
+| devMode            | boolean               | Allows you to output information for developers to the console         |
+| autostartForDev    | boolean               | Launches the `pathfinder` when the application is launched in dev mode |
+| onChangeEnviroment | (env: string) => void | Callback changing enviroment                                           |
 
 
 ## Types
 
 ```ts
 
-type TEnviroment = {
+type TEnvironment = {
     // the unique name of the environment, for example 'prod', 'dev', etc...
     name: string;
     // OpenApi scheme
@@ -89,7 +90,7 @@ type TMockServerSettings = {
 
 type TPathfinderSettings = {
     // name of environment
-    enviroment?: string;
+    environment?: string;
     mockServer?: TMockServerSettings;
     /* {
       ['/profile/{id_profile}']: {

@@ -4,7 +4,7 @@ import prod from './dnevnik.prod.json';
 
 describe('pathfinder', function () {
   const pathfinder = Pathfinder.create({
-    enviroments: [
+    environments: [
       {
         name: 'dev',
         //@ts-ignore
@@ -37,7 +37,7 @@ describe('pathfinder', function () {
           },
         },
       },
-      enviroment: 'dev',
+      environment: 'dev',
     },
   });
 
@@ -171,9 +171,9 @@ describe('pathfinder', function () {
     });
   });
 
-  it('change enviroment', function () {
-    pathfinder.setEnviroment('prod');
-    expect(pathfinder.getAllSettings().enviroment).toEqual('prod');
+  it('change environment', function () {
+    pathfinder.setEnvironment('prod');
+    expect(pathfinder.getAllSettings().environment).toEqual('prod');
   });
 
   it('should getting mock url for prod', function () {
