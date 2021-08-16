@@ -4,7 +4,7 @@ import { FlatList } from 'react-native';
 import { ApiListItem } from '../organisms';
 import { usePathfinder } from '../../../../pathfinder-react';
 import { Layout, TextInput } from '../../../ui/atoms';
-import { EnviromentSelector } from '../../../features/enviroment-selector';
+import { EnvironmentSelector } from '../../../features/environment-selector';
 
 export const HomePage: React.FC = () => {
   const pathfinder = usePathfinder();
@@ -30,7 +30,7 @@ export const HomePage: React.FC = () => {
   return (
     <>
       <Layout.Cal spacing={{ left: 2, right: 2 }}>
-        <EnviromentSelector />
+        <EnvironmentSelector />
         <TextInput
           onChangeText={setSearchQuery}
           value={searchQuery}

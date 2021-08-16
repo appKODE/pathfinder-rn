@@ -9,18 +9,18 @@ import { PathfinderContext } from './PathfinderContext';
 export type TPathfinderProviderProps = TPathfinderProps & {
   devMode?: boolean;
   onChangeState?: (state: TPathfinderSettings) => void;
-  onChangeEnviroment?: (env: string) => void;
+  onChangeEnvironment?: (env: string) => void;
 };
 
 export const PathfinderProvider: React.FC<TPathfinderProviderProps> = ({
   children,
-  enviroments,
+  environments,
   settings,
   devMode,
   onChangeState,
-  onChangeEnviroment,
+  onChangeEnvironment,
 }) => {
-  const instance = useRef(Pathfinder.create({ enviroments, settings }));
+  const instance = useRef(Pathfinder.create({ environments, settings }));
   const [pathfinderState, setState] = useState<Required<TPathfinderSettings>>(
     instance.current.getAllSettings()
   );
@@ -32,8 +32,8 @@ export const PathfinderProvider: React.FC<TPathfinderProviderProps> = ({
         if (devMode) {
           console.log('Pathfinder - set state:', newState);
         }
-        if (pathfinderState.enviroment !== newState.enviroment) {
-          onChangeEnviroment && onChangeEnviroment(newState.enviroment);
+        if (pathfinderState.environment !== newState.environment) {
+          onChangeEnvironment && onChangeEnvironment(newState.environment);
         }
         setState(newState);
         onChangeState && onChangeState(newState);
@@ -42,24 +42,24 @@ export const PathfinderProvider: React.FC<TPathfinderProviderProps> = ({
     return () => {
       event.remove();
     };
-  }, [pathfinderState, devMode, onChangeState, onChangeEnviroment]);
+  }, [pathfinderState, devMode, onChangeState, onChangeEnvironment]);
 
   React.useEffect(() => {
-    if (settings?.enviroment) {
-      instance.current.setEnviroment(settings?.enviroment);
+    if (settings?.environment) {
+      instance.current.setEnvironment(settings?.environment);
     }
   }, [settings]);
 
   const value = useMemo(
     () => ({
       pathfinder: instance.current,
-      scheme: enviroments.find(
-        (env) => env.name === pathfinderState.enviroment
+      scheme: environments.find(
+        (env) => env.name === pathfinderState.environment
       )!.scheme,
-      enviroments,
+      environments,
       settings: pathfinderState,
     }),
-    [pathfinderState, enviroments]
+    [pathfinderState, environments]
   );
   return (
     <PathfinderContext.Provider value={value}>

@@ -27,10 +27,10 @@ const settings: TPathfinderProps['settings'] = {
       },
     },
   },
-  enviroment: 'dev',
+  environment: 'prod',
 };
 
-const enviroments: TPathfinderProps['enviroments'] = [
+const environments: TPathfinderProps['environments'] = [
   {
     name: 'dev',
     //@ts-ignore
@@ -44,7 +44,7 @@ const enviroments: TPathfinderProps['enviroments'] = [
 ];
 
 export default function App() {
-  const [enviroment, setEnviroment] = React.useState('dev');
+  const [environment, setEnvironment] = React.useState(settings?.environment);
   const request = React.useCallback(async () => {
     try {
       const headers = new Headers();
@@ -62,15 +62,15 @@ export default function App() {
 
   return (
     <Pathfinder
-      enviroments={enviroments}
+      environments={environments}
       settings={settings}
       asyncStorage={AsyncStorage}
-      onChangeEnviroment={setEnviroment}
+      onChangeEnvironment={setEnvironment}
       devMode
       autostartForDev
     >
       <View style={styles.container}>
-        <Text style={styles.label}>Eviroment: {enviroment}</Text>
+        <Text style={styles.label}>Environment: {environment}</Text>
         <Button title="test" onPress={request} />
       </View>
     </Pathfinder>

@@ -4,14 +4,14 @@ import type {
   Pathfinder,
   TPathfinderSettings,
   TScheme,
-  TEnviroment,
+  TEnvironment,
 } from '../pathfinder';
 
 export interface IPathfinderContext {
   pathfinder: Pathfinder;
   settings: Required<TPathfinderSettings>;
   scheme: TScheme;
-  enviroments: TEnviroment[];
+  environments: TEnvironment[];
 }
 
 export const PathfinderContext = React.createContext<IPathfinderContext>(
