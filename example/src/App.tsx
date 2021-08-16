@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, View, Button } from 'react-native';
+import { StyleSheet, View, Button, Text } from 'react-native';
 import Pathfinder, { TPathfinderProps } from 'react-native-pathfinder';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -44,6 +44,7 @@ const enviroments: TPathfinderProps['enviroments'] = [
 ];
 
 export default function App() {
+  const [enviroment, setEnviroment] = React.useState('dev');
   const request = React.useCallback(async () => {
     try {
       const headers = new Headers();
@@ -64,10 +65,12 @@ export default function App() {
       enviroments={enviroments}
       settings={settings}
       asyncStorage={AsyncStorage}
+      onChangeEnviroment={setEnviroment}
       devMode
       autostartForDev
     >
       <View style={styles.container}>
+        <Text style={styles.label}>Eviroment: {enviroment}</Text>
         <Button title="test" onPress={request} />
       </View>
     </Pathfinder>
@@ -81,9 +84,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     zIndex: 0,
   },
-  box: {
-    width: 60,
-    height: 60,
+  label: {
     marginVertical: 20,
   },
 });
