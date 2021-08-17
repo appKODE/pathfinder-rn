@@ -1,4 +1,4 @@
-import WhatwgUrl from 'whatwg-url';
+import 'url-polyfill';
 import { parse } from 'querystring';
 
 type TBuildUrlInputParams = {
@@ -28,7 +28,7 @@ export const generatePath = (
 };
 
 export const compareUrlWithTemplate = (url: string) => {
-  const { pathname } = new URL(url);
+  const { pathname } = new Url(url);
   return (template: string) => {
     const regexp = template.replace(/{.+}/g, '.+');
     return (
@@ -68,4 +68,4 @@ export const createDomain = (
   return `${protocol}//${hostname}${port ? ':' + port : ''}`;
 };
 
-export const URL = WhatwgUrl.URL;
+export const Url = URL;
