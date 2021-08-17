@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.6](https://git.appkode.ru/ca/react-native-pathfinder/compare/v0.0.5...v0.0.6) (2021-08-17)
+
+
+### Bug Fixes
+
+* **url_polyfill:** for hermes ([9888bf4](https://git.appkode.ru/ca/react-native-pathfinder/commit/9888bf4445de137462d020fea5452d36e1e6b01c))
+
 ### [0.0.5](https://git.appkode.ru/ca/react-native-pathfinder/compare/v0.0.4...v0.0.5) (2021-08-16)
 
 
