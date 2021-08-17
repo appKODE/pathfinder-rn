@@ -48,7 +48,6 @@
     "@types/jest": "^26.0.0",
     "@types/react": "^16.9.19",
     "@types/react-native": "0.62.13",
-    "@types/whatwg-url": "^8.2.1",
     "commitlint": "^11.0.0",
     "eslint": "^7.2.0",
     "eslint-config-prettier": "^7.0.0",
@@ -149,6 +148,6 @@
   "dependencies": {
     "querystring": "^0.2.1",
     "react-native-uuid": "^2.0.1",
-    "whatwg-url": "^9.1.0"
+    "url-polyfill": "^1.1.12"
   }
 }

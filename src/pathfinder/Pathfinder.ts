@@ -9,7 +9,7 @@ import {
   generatePath,
   getPathParameters,
   getQueryParams,
-  URL,
+  Url,
 } from './utils';
 
 type MethodObject = Pick<OperationObject, 'requestBody'> & {
@@ -208,7 +208,7 @@ export class Pathfinder {
     template: string,
     settings: MethodObject
   ): string {
-    const { pathname, hostname, protocol, port, search } = new URL(url);
+    const { pathname, hostname, protocol, port, search } = new Url(url);
     let pathParameters = getPathParameters(pathname, template);
     let queryParameters = getQueryParams(search);
 
