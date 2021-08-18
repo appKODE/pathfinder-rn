@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.7](https://git.appkode.ru/ca/react-native-pathfinder/compare/v0.0.6...v0.0.7) (2021-08-18)
+
+
+### Features
+
+* **statusbar:** add change status bar for android ([ffed779](https://git.appkode.ru/ca/react-native-pathfinder/commit/ffed779ebf1d6d51700dc47925a03014c404e6fe))
+
 ### [0.0.6](https://git.appkode.ru/ca/react-native-pathfinder/compare/v0.0.5...v0.0.6) (2021-08-17)
 
 
