@@ -1,4 +1,4 @@
-import 'url-polyfill';
+import * as URLPolyfill from 'react-native-url-polyfill';
 import { parse } from 'querystring';
 
 type TBuildUrlInputParams = {
@@ -68,4 +68,4 @@ export const createDomain = (
   return `${protocol}//${hostname}${port ? ':' + port : ''}`;
 };
 
-export const Url = URL;
+export const Url = URLPolyfill.URL;
