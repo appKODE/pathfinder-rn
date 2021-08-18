@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, Platform, StatusBar } from 'react-native';
 
 type Props = {
   right?: React.ReactNode;
@@ -30,6 +30,10 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     height: 48,
     width: '100%',
+    marginTop: Platform.select({
+      android: StatusBar.currentHeight,
+      default: 0,
+    }),
   },
   title: {
     textAlign: 'center',

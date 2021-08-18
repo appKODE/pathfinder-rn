@@ -6,6 +6,8 @@ import {
   Keyboard,
   KeyboardAvoidingView,
   Platform,
+  StatusBar as StatusBarBase,
+  StatusBarProps,
 } from 'react-native';
 
 import { Control } from './ui/atoms/control/Control';
@@ -25,15 +27,29 @@ const styles = StyleSheet.create({
   },
 });
 
+type TStatusBar = {
+  popStackEntry: (props: StatusBarProps) => null;
+  pushStackEntry: (props: StatusBarProps) => StatusBarProps;
+};
+
+const StatusBar: TStatusBar = Platform.select({
+  android: StatusBarBase as any,
+  default: {
+    popStackEntry: () => null,
+    pushStackEntry: () => ({}),
+  },
+});
+
 export const App: React.FC = () => {
   const { width } = useWindowDimensions();
   const slideX = useRef(new Animated.Value(-width)).current;
-
+  const statusBarProps = useRef({});
   React.useEffect(() => {
     slideX.setValue(-width);
   }, [width, slideX]);
 
   const onClose = useCallback(() => {
+    StatusBar.popStackEntry(statusBarProps.current);
     Keyboard.dismiss();
     Animated.timing(slideX, {
       toValue: -width,
@@ -63,7 +79,16 @@ export const App: React.FC = () => {
           </Page>
         </KeyboardAvoidingView>
       </Animated.View>
-      <Control slideX={slideX} sliderStartPosition={-width} />
+      <Control
+        slideX={slideX}
+        sliderStartPosition={-width}
+        onOpen={() => {
+          statusBarProps.current = StatusBar.pushStackEntry({
+            animated: true,
+            translucent: true,
+          });
+        }}
+      />
     </>
   );
 };
