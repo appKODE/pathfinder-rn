@@ -35,9 +35,14 @@ const styles = StyleSheet.create({
 type Props = {
   slideX: Animated.Value;
   sliderStartPosition: number;
+  onOpen: () => void;
 };
 
-export const Control: React.FC<Props> = ({ slideX, sliderStartPosition }) => {
+export const Control: React.FC<Props> = ({
+  slideX,
+  sliderStartPosition,
+  onOpen,
+}) => {
   const positionX = useRef(new Animated.Value(0)).current;
   const positionY = useRef(new Animated.Value(50)).current;
   const panResponder = useMemo(
@@ -51,7 +56,9 @@ export const Control: React.FC<Props> = ({ slideX, sliderStartPosition }) => {
               duration: 200,
               toValue: 0,
               useNativeDriver: false,
-            }).start();
+            }).start(() => {
+              onOpen();
+            });
           } else {
             Animated.timing(slideX, {
               duration: 200,
@@ -91,7 +98,7 @@ export const Control: React.FC<Props> = ({ slideX, sliderStartPosition }) => {
           ]).start();
         },
       }),
-    [positionX, positionY, slideX, sliderStartPosition]
+    [positionX, positionY, slideX, sliderStartPosition, onOpen]
   );
 
   const right = positionX.interpolate({
