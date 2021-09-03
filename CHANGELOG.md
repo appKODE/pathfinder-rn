@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.8](https://git.appkode.ru/ca/react-native-pathfinder/compare/v0.0.7...v0.0.8) (2021-08-18)
+
+
+### Bug Fixes
+
+* **urlpolyfill:** replace url polyfill ([8143ec5](https://git.appkode.ru/ca/react-native-pathfinder/commit/8143ec5e0fe97c6e57ff8df79007ff4bdd5dcc8c))
+
 ### [0.0.7](https://git.appkode.ru/ca/react-native-pathfinder/compare/v0.0.6...v0.0.7) (2021-08-18)
 
 
