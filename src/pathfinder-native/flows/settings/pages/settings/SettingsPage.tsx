@@ -4,7 +4,6 @@ import { ScrollView } from 'react-native';
 import { MockServerForm } from '../../organisms';
 import { Layout } from '../../../../ui/atoms';
 import { EnvironmentSelector } from '../../../../features/environment-selector';
-import { ModuleVersion } from '../../molecules';
 
 export const SettingsPage: React.FC = () => {
   return (
@@ -14,9 +13,7 @@ export const SettingsPage: React.FC = () => {
         <Layout.Cal spacing={2} flex={1}>
           <MockServerForm />
         </Layout.Cal>
-        <Layout.Cal spacing={{ bottom: 2 }}>
-          <ModuleVersion />
-        </Layout.Cal>
+        <Layout.Cal spacing={{ bottom: 2 }} />
       </ScrollView>
     </Layout.Cal>
   );
