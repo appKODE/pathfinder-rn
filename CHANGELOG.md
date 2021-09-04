@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.10](https://git.appkode.ru/ca/react-native-pathfinder/compare/v0.0.9...v0.0.10) (2021-09-04)
+
+
+### Bug Fixes
+
+* **types:** fixed include types ([db1567a](https://git.appkode.ru/ca/react-native-pathfinder/commit/db1567af64f7c5b14640d402167b3f2a1f84936b))
+
 ### [0.0.9](https://git.appkode.ru/ca/react-native-pathfinder/compare/v0.0.8...v0.0.9) (2021-09-03)
 
 
