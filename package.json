@@ -1,5 +1,5 @@
 {
-  "name": "react-native-pathfinder",
+  "name": "@kode-frontend/pathfinder-rn",
   "version": "0.0.10",
   "description": "pathfinder",
   "main": "lib/commonjs/index",
@@ -31,14 +31,15 @@
     "ios",
     "android"
   ],
-  "repository": "https://git.appkode.ru/ca/react-native-pathfinder",
-  "author": "KODE <ca@kode.ru> (https://git.appkode.ru/ca/react-native-pathfinder)",
+  "repository": "https://github.com/appKODE/react-native-pathfinder",
+  "author": "frontend-team@kode.ru",
   "license": "MIT",
   "bugs": {
-    "url": "https://git.appkode.ru/ca/react-native-pathfinder/issues"
+    "url": "https://github.com/appKODE/react-native-pathfinder/issues"
   },
-  "homepage": "https://git.appkode.ru/ca/react-native-pathfinder#readme",
+  "homepage": "https://github.com/appKODE/react-native-pathfinder#readme",
   "publishConfig": {
+    "cache": "cache/.npm",
     "registry": "https://registry.npmjs.org/"
   },
   "devDependencies": {
