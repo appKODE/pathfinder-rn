@@ -1,19 +1,19 @@
-# react-native-pathfinder
+# pathfinder-rn
 
 This is a library for integrating a pathfinder into your application.  
 The library is easy to integrate into an existing project and does not require any further development.
 ## Installation
 
 ```sh
-yarn add git+https://git.appkode.ru/front/react-native-pathfinder
+yarn add @kode-frontend/pathfinder-rn
 ```
 
 ## Usage
 
 ```js
-import BiometryTools from 'react-native-pathfinder';
+import Pathfinder from 'pathfinder-rn';
 
-import dev from '../dnevnik.dev.json';
+import dev from '../petstore.dev.json';
 
 const settings: TPathfinderProps['settings'] = {
   mockServer: {

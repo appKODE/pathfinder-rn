@@ -3,8 +3,8 @@ import { StyleSheet, View, Button, Text } from 'react-native';
 import Pathfinder, { TPathfinderProps } from 'react-native-pathfinder';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import dev from '../dnevnik.dev.json';
-import prod from '../dnevnik.prod.json';
+import dev from '../petstore.dev.json';
+import prod from '../petstore.prod.json';
 
 const settings: TPathfinderProps['settings'] = {
   mockServer: {

@@ -1,6 +1,6 @@
 {
-  "name": "react-native-pathfinder-example",
-  "description": "Example app for react-native-pathfinder",
+  "name": "pathfinder-rn-example",
+  "description": "Example app for pathfinder-rn",
   "version": "0.0.1",
   "private": true,
   "scripts": {
