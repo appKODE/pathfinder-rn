@@ -1,3 +1,6 @@
+# :construction: :construction: :construction: THIS PROJECT HAS EXPERIMENTAL STATUS, DON'T USE IT :construction: :construction: :construction:
+
+
 # pathfinder-rn
 
 This is a library for integrating a pathfinder into your application.  
