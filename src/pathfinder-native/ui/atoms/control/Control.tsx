@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from 'react';
+import React, { useCallback, useMemo, useRef } from 'react';
 import {
   StyleSheet,
   Animated,
@@ -6,7 +6,10 @@ import {
   PanResponder,
   Dimensions,
   View,
+  Platform,
 } from 'react-native';
+
+import { useKeyboardEvents } from './lib';
 
 const styles = StyleSheet.create({
   touchArea: {
@@ -100,6 +103,22 @@ export const Control: React.FC<Props> = ({
       }),
     [positionX, positionY, slideX, sliderStartPosition, onOpen]
   );
+
+  useKeyboardEvents({
+    onOpen: useCallback(
+      (keyboardHeight) => {
+        if (Platform.OS === 'android') {
+          positionY.setValue(50);
+        } else {
+          positionY.setValue(keyboardHeight + 50);
+        }
+      },
+      [positionY]
+    ),
+    onClose: useCallback(() => {
+      positionY.setValue(50);
+    }, [positionY]),
+  });
 
   const right = positionX.interpolate({
     inputRange: [-50, 0],
