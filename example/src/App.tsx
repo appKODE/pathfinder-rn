@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { StyleSheet, View, Button, Text } from 'react-native';
-import Pathfinder, { TPathfinderProps } from 'react-native-pathfinder';
+import { StyleSheet, View, Button, Text, TextInput } from 'react-native';
+import Pathfinder, { TPathfinderProps } from '@kode-frontend/pathfinder-rn';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import dev from '../petstore.dev.json';
@@ -72,6 +72,7 @@ export default function App() {
       <View style={styles.container}>
         <Text style={styles.label}>Environment: {environment}</Text>
         <Button title="test" onPress={request} />
+        <TextInput placeholder="with keyboard" />
       </View>
     </Pathfinder>
   );
