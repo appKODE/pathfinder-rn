@@ -1,13 +1,13 @@
 import React, { useCallback, useRef, useState } from 'react';
 
-import type { TAsyncStorage } from '../../../pathfinder-native/types';
+import type { TAsyncStorage } from '../../types';
 
 type TExtra = {
   storageKey: string;
   asyncStorage: TAsyncStorage;
 };
 
-export function usePeristor<T extends Object>(
+export function usePersister<T extends Object>(
   initialValue: T,
   { asyncStorage, storageKey }: TExtra
 ): [T | null, (newSettings: T) => void] {

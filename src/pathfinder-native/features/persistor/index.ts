@@ -1,1 +1,0 @@
-export { usePeristor } from './usePeristor';
