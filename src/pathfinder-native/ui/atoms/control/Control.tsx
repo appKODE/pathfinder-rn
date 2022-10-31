@@ -9,7 +9,7 @@ import {
   Platform,
 } from 'react-native';
 
-import { useKeyboardEvents } from './lib';
+import { useKeyboardEvents } from './libs';
 
 const styles = StyleSheet.create({
   touchArea: {
