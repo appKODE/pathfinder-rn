@@ -1,11 +1,11 @@
-import React, { useCallback } from 'react';
+import React, { ReactNode, useCallback } from 'react';
 
 import { App } from './App';
 import DeepLink from './features/deeplink/DeepLink';
 import DevtoolsDeeplink from './features/deeplink/deeplinks/DevtoolsDeeplink';
 import { PathResolver } from './features/path-resolver/PathResolver';
-import { usePeristSettings } from './features/persist-settings';
-import { usePeristor } from './features/persistor';
+import { usePersistSettings } from './features/persist-settings';
+import { usePersister } from './features/persister';
 import {
   PathfinderProvider,
   TPathfinderProviderProps,
@@ -18,16 +18,17 @@ export type TPathfinderProps = Omit<
 > & {
   asyncStorage: TAsyncStorage;
   autostartForDev?: boolean;
+  children?: ReactNode;
 };
 
 const STORAGE_KEY_ENABLED_PATHFINDER = '@pathfinder-settings';
 
-const PathfinderPure: React.FC<TPathfinderProps> = ({
+const PathfinderPure = ({
   settings,
   asyncStorage,
   ...props
-}) => {
-  const [savedSettings, onChangeSettings] = usePeristSettings(settings, {
+}: TPathfinderProps) => {
+  const [savedSettings, onChangeSettings] = usePersistSettings(settings, {
     asyncStorage,
   });
 
@@ -46,12 +47,12 @@ const PathfinderPure: React.FC<TPathfinderProps> = ({
   );
 };
 
-const Pathfinder: React.FC<TPathfinderProps> = ({
+const Pathfinder = ({
   children,
   autostartForDev,
   ...props
-}) => {
-  const [enablePathfinder, setEnablePathfinderState] = usePeristor(
+}: TPathfinderProps) => {
+  const [enablePathfinder, setEnablePathfinderState] = usePersister(
     {
       enabled: autostartForDev && __DEV__,
     },
