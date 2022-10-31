@@ -1,6 +1,6 @@
 import React, { useCallback, useState, useRef } from 'react';
 
-import type { TAsyncStorage } from '../../../pathfinder-native/types';
+import type { TAsyncStorage } from '../../types';
 import type { TPathfinderSettings } from '../../../pathfinder-react';
 
 const STORAGE_KEY = '@pathfinder/settings';
@@ -11,7 +11,7 @@ type TExtra = {
 
 type TState = Partial<TPathfinderSettings> | undefined;
 
-export const usePeristSettings = (
+export const usePersistSettings = (
   initialSettings: TState,
   { asyncStorage }: TExtra
 ): [TState, (newSettings: TPathfinderSettings) => void] => {
