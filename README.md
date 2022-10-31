@@ -3,7 +3,7 @@
 
 # pathfinder-rn
 
-This is a library for integrating a pathfinder into your application.  
+This is a library for integrating a pathfinder into your application.
 The library is easy to integrate into an existing project and does not require any further development.
 ## Installation
 
@@ -106,6 +106,11 @@ type TPathfinderSettings = {
 };
 
 ```
+
+## Toggle devtools with Deep Links
+
+- `open` - \<prefix\>://pathfinder/open
+- `close` - \<prefix\>://pathfinder/close
 
 ## Tags
 
