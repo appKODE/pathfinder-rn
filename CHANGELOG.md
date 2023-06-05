@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0](https://github.com/appKODE/react-native-pathfinder/compare/v0.1.5...v0.2.0) (2023-06-05)
+
+
+### Features
+
+* **multiple-specs:** supporting multiple specifications and refactoring ([c267a20](https://github.com/appKODE/react-native-pathfinder/commit/c267a20185115607e3f2270726c0184fc7d52d48))
+
 ### [0.1.5](https://github.com/appKODE/react-native-pathfinder/compare/v0.1.4...v0.1.5) (2022-10-31)
 
 ### [0.1.4](https://github.com/appKODE/react-native-pathfinder/compare/v0.1.3...v0.1.4) (2022-10-31)
