@@ -40,7 +40,7 @@ const StatusBar: TStatusBar = Platform.select({
   },
 });
 
-export const App: React.FC = () => {
+export const App = () => {
   const { width } = useWindowDimensions();
   const slideX = useRef(new Animated.Value(-width)).current;
   const statusBarProps = useRef({});

@@ -14,38 +14,45 @@ yarn add @kode-frontend/pathfinder-rn
 ## Usage
 
 ```js
-import Pathfinder from 'pathfinder-rn';
+import {
+  createPathfinder,
+  PathfinderConfiguration,
+} from '@kode-frontend/pathfinder-rn';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import dev from '../petstore.dev.json';
+import petstore from '../petstore.json';
+import users from '../users.json';
 
-const settings: TPathfinderProps['settings'] = {
-  mockServer: {
-    dev: {
-      domain: 'https://127.0.0.1:3100',
-      headers: {
-        Accept: 'application/json',
-      },
-      queryParams: {
-        __dynamic: false,
-      },
+const config = PathfinderConfiguration
+  // create pathfinder configuration with default settings for mock server
+  .create({
+    domain: 'https://127.0.0.1:3100',
+    headers: {
+      Accept: 'application/json',
     },
-  },
-  environment: 'dev',
-};
+    queryParams: {
+      __dynamic: false,
+    },
+  })
+  // add specification
+  .addScheme({
+    name: 'petstore',
+    specification: petstore,
+  })
+  .addScheme({
+    name: 'users',
+    specification: users,
+  });
 
-const environments: TPathfinderProps['envirnoments'] = [
-  {
-    name: 'dev',
-    scheme: dev,
-  },
-];
+const Pathfinder = createPathfinder(config, AsyncStorage);
 
 export default function App() {
-
+  const [environment, setEnvironment] = React.useState('dev');
   return (
     <Pathfinder
-      environments={environments}
-      settings={settings}
+      initialEnvironment={environment}
+      environments={['dev', 'prod']}
+      onChangeEnvironment={setEnvironment}
       devMode
       autostartForDev
     >
@@ -58,54 +65,14 @@ export default function App() {
 
 ## Props
 
-| prop name          | type                  | description                                                            |
-| ------------------ | --------------------- | ---------------------------------------------------------------------- |
-| enviroments        | TEnviroment[]         | List of OpenAPI specifications and metadata                            |
-| settings           | TPathfinderSettings   | Mock server settings and initial state                                 |
-| devMode            | boolean               | Allows you to output information for developers to the console         |
-| autostartForDev    | boolean               | Launches the `pathfinder` when the application is launched in dev mode |
-| onChangeEnviroment | (env: string) => void | Callback changing enviroment                                           |
+| prop name           | type                  | description                                                            |
+| ------------------- | --------------------- | ---------------------------------------------------------------------- |
+| initialEnvironment  | string                | Initial environments, should be static (required)                      |
+| environments        | string[]              | List of environments (required)                                        |
+| devMode             | boolean               | Allows you to output information for developers to the console         |
+| autostartForDev     | boolean               | Launches the `pathfinder` when the application is launched in dev mode |
 
 
-## Types
-
-```ts
-
-type TEnvironment = {
-    // the unique name of the environment, for example 'prod', 'dev', etc...
-    name: string;
-    // OpenApi scheme
-    scheme: OpenAPIObject;
-};
-
-type Template = {
-    get?: OpenAPIObject.MethodObject;
-    put?: OpenAPIObject.MethodObject;
-    post?: OpenAPIObject.MethodObject;
-    delete?: OpenAPIObject.MethodObject;
-};
-
-type TMockServerSettings = {
-    domain?: string;
-    headers?: Record<string, string>;
-    queryParams?: Record<string, string | number | boolean>;
-};
-
-type TPathfinderSettings = {
-    // name of environment
-    environment?: string;
-    mockServer?: TMockServerSettings;
-    /* {
-      ['/profile/{id_profile}']: {
-        get: {
-          ...
-        }
-      }
-    } */
-    paths?: Record<string, Template>;
-};
-
-```
 
 ## Toggle devtools with Deep Links
 

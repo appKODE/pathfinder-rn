@@ -1,1 +1,1 @@
-export { usePersister } from './usePersister';
+export { usePersister } from './use-persister';
