@@ -1,6 +1,6 @@
 //
 //  File.swift
-//  PathfinderExample
+//  PathfinderRnExample
 //
 
 import Foundation

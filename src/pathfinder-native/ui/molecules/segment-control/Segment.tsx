@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, TouchableOpacity, Text, Dimensions } from 'react-native';
+import { theme } from '../../theme';
 const { width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
@@ -19,6 +20,9 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     shadowOffset: { width: 2, height: 2 },
   },
+  label: {
+    color: theme.colors.foreground.default,
+  },
 });
 
 type Props = {
@@ -33,7 +37,7 @@ export const Segment: React.FC<Props> = ({ title, focused, onPress }) => {
       style={[styles.root, focused && styles.focused]}
       onPress={onPress}
     >
-      <Text allowFontScaling={false} numberOfLines={1}>
+      <Text style={styles.label} allowFontScaling={false} numberOfLines={1}>
         {title}
       </Text>
     </TouchableOpacity>

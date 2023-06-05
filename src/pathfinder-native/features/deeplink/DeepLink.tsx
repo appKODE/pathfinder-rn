@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Linking } from 'react-native';
-import DeepLinkContext, { DeepLinkEvents } from './DeepLinkContext';
+import DeepLinkContext, { DeepLinkEvents } from './deeplink-context';
 import query from 'query-string';
 import type { TDeepLinkHandlerParams } from './types';
 
@@ -12,7 +12,11 @@ const getParsedUrl = (url: string): TDeepLinkHandlerParams => {
   };
 };
 
-const DeepLink: React.FC = ({ children }) => {
+type Props = {
+  children: React.ReactNode;
+};
+
+export const DeepLink = ({ children }: Props) => {
   const subscriptions = React.useRef<Record<string, DeepLinkEvents>>({});
 
   React.useEffect(() => {
@@ -57,5 +61,3 @@ const DeepLink: React.FC = ({ children }) => {
     </DeepLinkContext.Provider>
   );
 };
-
-export default DeepLink;

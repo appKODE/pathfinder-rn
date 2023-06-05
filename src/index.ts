@@ -1,4 +1,2 @@
-import Pathfinder from './pathfinder-native';
-
-export * from './pathfinder-native';
-export default Pathfinder;
+export { createPathfinder, PathfinderProps } from './pathfinder-native';
+export { PathfinderConfiguration } from './pathfinder';
