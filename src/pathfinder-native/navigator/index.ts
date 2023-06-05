@@ -1,1 +1,1 @@
-export { AppNavigator } from './AppNavigator';
+export { AppNavigator } from './app-navigator';

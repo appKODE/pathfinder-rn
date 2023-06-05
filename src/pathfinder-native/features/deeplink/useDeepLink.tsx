@@ -1,6 +1,6 @@
 import React from 'react';
 import Uuid from 'react-native-uuid';
-import DeepLinkContext from './DeepLinkContext';
+import DeepLinkContext from './deeplink-context';
 import type { TDeepLinkHandlerParams } from './types';
 
 interface Options {

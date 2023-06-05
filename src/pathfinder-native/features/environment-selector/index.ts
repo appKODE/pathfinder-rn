@@ -1,1 +1,1 @@
-export { EnvironmentSelector } from './EnvironmentSelector';
+export { EnvironmentSelector } from './environment-selector';

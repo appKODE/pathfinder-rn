@@ -1,1 +1,2 @@
-export { TextInput } from './TextInput';
+export { TextInput } from './text-input';
+export { Switch } from './switch';

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { TabBar, TTabBarProps } from './TabBar';
+import { theme } from '../../../ui/theme';
 
 const styles = StyleSheet.create({
   root: {
@@ -9,6 +10,11 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
+  },
+  route: {
+    flex: 1,
+    backgroundColor: theme.colors.background.default,
+    ...StyleSheet.absoluteFillObject,
   },
 });
 
@@ -30,9 +36,18 @@ export const Tabs: React.FC<TTabsProps> = ({ children, ...tabBarProps }) => {
   return (
     <View style={styles.root}>
       <View style={styles.container}>
-        {React.Children.toArray(children).filter(
-          (child: any) => child.props.routeName === selectedRoute
-        )}
+        {React.Children.toArray(children).map((child: any) => {
+          const routeName = child.props.routeName;
+          const isActive = routeName === selectedRoute;
+          return (
+            <View
+              key={routeName}
+              style={[styles.route, { zIndex: isActive ? 1 : 0 }]}
+            >
+              {child}
+            </View>
+          );
+        })}
       </View>
       <TabBar {...tabBarProps} routes={routes} currentRoute={selectedRoute} />
     </View>

@@ -1,1 +1,1 @@
-export { usePersistSettings } from './usePersistSettings';
+export { usePersistSettings } from './use-persist-settings';
