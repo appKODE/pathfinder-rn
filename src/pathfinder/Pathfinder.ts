@@ -1,8 +1,12 @@
+import type { PathfinderConfiguration } from './pathfinder-configuration';
 import type {
-  OpenAPIObject,
-  OperationObject,
-  ParameterObject,
-} from './openApi/OpenApi';
+  MethodObject,
+  MockServerSettings,
+  ResolveParams,
+  ResolveResult,
+  PathfinderSettings,
+  Template,
+} from './types';
 import {
   compareUrlWithTemplate,
   createDomain,
@@ -12,144 +16,67 @@ import {
   Url,
 } from './utils';
 
-type MethodObject = Pick<OperationObject, 'requestBody'> & {
-  parameters?: ParameterObject[];
-  enabledMock: boolean;
-  enabled: boolean;
-};
-
-type Template = {
-  get?: MethodObject;
-  put?: MethodObject;
-  post?: MethodObject;
-  delete?: MethodObject;
-};
-
-export type TMockServerSettings = {
-  domain: string;
-  headers: Record<string, string>;
-  queryParams: Record<string, string | number | boolean>;
-};
-
-export type TPathfinderSettings = {
-  environment?: string;
-  mockServer?: Record<string, TMockServerSettings>;
-  paths: Record<string, Template>;
-};
-
-type TResolveParams = {
-  url: string;
-  method: keyof Template;
-  headers?: Record<string, string>;
-};
-
-type TResolveResult = {
-  url: string;
-  headers: Record<string, string>;
-};
-
-export type TScheme = OpenAPIObject;
-
-export type TEnvironment = {
-  name: string;
-  description?: string;
-  scheme: TScheme;
-};
-
-export type TPathfinderProps = {
-  environments: TEnvironment[];
-  settings?: Partial<TPathfinderSettings>;
-};
-
-const initSettings: Required<TPathfinderSettings> = {
+const defaultSettings: PathfinderSettings = {
   paths: {},
-  mockServer: {},
-  environment: '',
+  servers: {},
 };
 
 export class Pathfinder {
-  static create(config: TPathfinderProps) {
-    return new Pathfinder(config);
+  /**
+   * Create new instance of Pathfinder
+   * @param settings PathfinderConfiguration
+   * @param initialSettings Settings
+   */
+  static create(
+    config: PathfinderConfiguration,
+    initialSettings: PathfinderSettings = defaultSettings
+  ) {
+    return new Pathfinder(config, initialSettings);
   }
 
-  private _environments: TEnvironment[] = [];
-  private _settings: Required<TPathfinderSettings> = initSettings;
-  private _listeners: Record<
+  private config: PathfinderConfiguration;
+  private settings: PathfinderSettings;
+  private listeners: Record<
     string,
-    (newSettings: Required<TPathfinderSettings>) => void
+    (newSettings: Required<PathfinderSettings>) => void
   > = {};
 
-  constructor({ environments, settings }: TPathfinderProps) {
-    this._environments = environments;
-
-    const currentEnvironment = settings?.environment || environments[0]?.name;
-
-    this._settings = {
-      ...initSettings,
-      ...settings,
-      environment: currentEnvironment,
-    };
+  private constructor(
+    config: PathfinderConfiguration,
+    initialSettings: PathfinderSettings
+  ) {
+    this.config = config;
+    this.settings = initialSettings;
   }
 
-  public resolve({
-    url,
-    method,
-    headers = {},
-  }: TResolveParams): TResolveResult {
-    const template = Object.keys(this.getScheme().paths).find(
-      compareUrlWithTemplate(url)
-    );
-    const { paths } = this.getAllSettings();
-    if (
-      !template ||
-      !paths[template] ||
-      !paths[template][method] ||
-      !paths[template][method]?.enabled
-    ) {
+  /**
+   * get original or changed url and headers
+   */
+  public resolve({ url, method, headers = {} }: ResolveParams): ResolveResult {
+    const result = this.findTemplateAndScheme(url);
+    if (!result) {
       return { url, headers };
     }
 
-    const templateObject = this.getScheme().paths[template];
+    const { template, scheme } = result;
 
-    if (!templateObject[method]) {
+    const settings = this.getSettings(template, method);
+
+    if (!settings?.enabled) {
       return { url, headers };
     }
 
-    const settings = paths[template][method]!;
-    const resultUrl = this.buildUrl(url, template, settings);
+    const server =
+      this.settings.servers[scheme.name] ||
+      this.config.getMockServer(scheme.name);
 
-    const resultHeaders = this.buildHeaders(headers, settings);
+    const resultUrl = this.buildUrl(url, template, settings, server);
+
+    const resultHeaders = this.buildHeaders(headers, settings, server);
 
     return {
       url: resultUrl,
       headers: resultHeaders,
-    };
-  }
-
-  public getSettings(template: string, method: keyof Template) {
-    const templateSettings = this.getAllSettings().paths[template];
-    if (!templateSettings) return;
-    return templateSettings[method];
-  }
-
-  public getScheme() {
-    const { environment } = this.getAllSettings();
-    return this._environments.find((env) => env.name === environment)!.scheme;
-  }
-
-  public getAllSettings() {
-    return this._settings;
-  }
-
-  public addListener(
-    event: 'update_settings',
-    callback: (newSettings: Required<TPathfinderSettings>) => void
-  ) {
-    this._listeners[event] = callback;
-    return {
-      remove: () => {
-        delete this._listeners[event];
-      },
     };
   }
 
@@ -159,44 +86,71 @@ export class Pathfinder {
     cb: (lastState: MethodObject) => MethodObject
   ) {
     this.prepareTemplateSettings(template, method);
-    this._settings.paths[template][method] = cb(
-      this._settings.paths[template][method]!
+    this.settings.paths[template][method] = cb(
+      this.settings.paths[template][method]!
     );
-    this.sendEvent('update_settings', { ...this._settings });
+    this.sendEvent('update_settings', { ...this.settings });
   }
 
   public updateMockServerSettings(
-    cb: (lastState: TMockServerSettings) => TMockServerSettings
+    specificationName: string,
+    cb: (lastState: MockServerSettings) => MockServerSettings
   ) {
-    const { environment, mockServer } = this.getAllSettings();
-    this._settings.mockServer[environment] = cb(
-      mockServer[environment] || {
+    this.settings.servers[specificationName] = cb(
+      this.config.getMockServer(specificationName) || {
         domain: '',
         headers: {},
         queryParams: {},
       }
     );
-    this.sendEvent('update_settings', { ...this._settings });
+    this.sendEvent('update_settings', { ...this.settings });
   }
 
-  public setEnvironment(environment: string) {
-    this._settings.environment = environment;
-    this.sendEvent('update_settings', { ...this._settings });
+  public addListener(
+    event: 'update_settings',
+    callback: (newSettings: PathfinderSettings) => void
+  ) {
+    this.listeners[event] = callback;
+    return {
+      remove: () => {
+        delete this.listeners[event];
+      },
+    };
+  }
+
+  public getSchemas() {
+    return this.config.getAll();
   }
 
   private sendEvent(event: 'update_settings', data: any) {
-    if (this._listeners[event]) {
-      this._listeners[event](data);
+    if (this.listeners[event]) {
+      this.listeners[event](data);
     }
   }
 
+  public getSettings(path: string, method: keyof Template) {
+    return this.settings.paths[path]?.[method];
+  }
+
+  private findTemplateAndScheme(url: string) {
+    for (const scheme of this.getSchemas()) {
+      const template = Object.keys(scheme.specification.paths).find(
+        compareUrlWithTemplate(url)
+      );
+      if (template) {
+        return { template, scheme };
+      }
+    }
+    return null;
+  }
+
   private prepareTemplateSettings(template: string, method: keyof Template) {
-    if (!this._settings.paths[template]) {
-      this._settings.paths[template] = {};
+    if (!this.settings.paths[template]) {
+      this.settings.paths[template] = {};
     }
 
-    if (!this._settings.paths[template][method]) {
-      this._settings.paths[template][method] = {
+    if (!this.settings.paths[template][method]) {
+      this.settings.paths[template][method] = {
         enabledMock: false,
         enabled: false,
       };
@@ -206,7 +160,8 @@ export class Pathfinder {
   private buildUrl(
     url: string,
     template: string,
-    settings: MethodObject
+    settings: MethodObject,
+    server?: MockServerSettings
   ): string {
     const { pathname, hostname, protocol, port, search } = new Url(url);
     let pathParameters = getPathParameters(pathname, template);
@@ -214,12 +169,12 @@ export class Pathfinder {
 
     let domain = createDomain(protocol, hostname, port);
 
-    if (settings.enabledMock && this.canUseMockServer()) {
+    if (server && settings.enabledMock && this.canUseMockServer(server)) {
       queryParameters = {
         ...queryParameters,
-        ...this.getQueryParamsMockServer(),
+        ...this.getQueryParamsMockServer(server),
       };
-      domain = this.getDomainMockServer();
+      domain = this.getDomainMockServer(server);
     }
 
     if (settings.parameters) {
@@ -235,7 +190,7 @@ export class Pathfinder {
       });
     }
 
-    const path = generatePath(template, {
+    const path = generatePath(pathname, template, {
       pathParameters: pathParameters,
       queryParameters: queryParameters,
     });
@@ -245,14 +200,15 @@ export class Pathfinder {
 
   private buildHeaders(
     originalHeaders: Record<string, string>,
-    settings: MethodObject
+    settings: MethodObject,
+    server: MockServerSettings
   ) {
     let headers = { ...originalHeaders };
 
-    if (settings.enabledMock && this.canUseMockServer()) {
+    if (settings.enabledMock && this.canUseMockServer(server)) {
       headers = {
         ...headers,
-        ...this.getHeadersMockServer(),
+        ...this.getHeadersMockServer(server),
       };
     }
 
@@ -267,42 +223,23 @@ export class Pathfinder {
     return headers;
   }
 
-  private canUseMockServer() {
-    const { mockServer, environment } = this.getAllSettings();
-    return Boolean(mockServer[environment] && mockServer[environment].domain);
+  private canUseMockServer(server: MockServerSettings) {
+    return Boolean(server && server.domain);
   }
 
-  private getDomainMockServer() {
-    const { mockServer, environment } = this.getAllSettings();
-    if (!mockServer[environment] || !mockServer[environment].domain) {
-      throw Error('getDomainMockServer() was called before canUseMockServer()');
-    }
-    return mockServer[environment].domain;
+  private getDomainMockServer(server: MockServerSettings) {
+    return server.domain;
   }
 
-  private getQueryParamsMockServer() {
-    const { mockServer, environment } = this.getAllSettings();
-    if (!mockServer[environment] || !mockServer[environment].domain) {
-      throw Error(
-        'getQueryParamsMockServer() was called before canUseMockServer()'
-      );
-    }
+  private getQueryParamsMockServer(server: MockServerSettings) {
     const queryParams: Record<string, string> = {};
-    Object.entries(mockServer[environment].queryParams || {}).forEach(
-      ([key, value]) => {
-        queryParams[key] = String(value);
-      }
-    );
+    Object.entries(server.queryParams || {}).forEach(([key, value]) => {
+      queryParams[key] = String(value);
+    });
     return queryParams;
   }
 
-  private getHeadersMockServer() {
-    const { mockServer, environment } = this.getAllSettings();
-    if (!mockServer[environment] || !mockServer[environment].domain) {
-      throw Error(
-        'getHeadersMockServer() was called before canUseMockServer()'
-      );
-    }
-    return mockServer[environment].headers || {};
+  private getHeadersMockServer(server: MockServerSettings) {
+    return server.headers || {};
   }
 }

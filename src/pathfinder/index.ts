@@ -1,3 +1,12 @@
-export * from './Pathfinder';
-export * from './openApi/OpenApi';
-export * from './openApi/SpecificationExtension';
+export * from './open-api/open-api';
+export * from './open-api/specification-extension';
+export { PathfinderConfiguration } from './pathfinder-configuration';
+export { Pathfinder } from './pathfinder';
+export type {
+  ResolveParams,
+  ResolveResult,
+  Template,
+  MockServerSettings,
+  PathfinderSettings,
+  Scheme,
+} from './types';

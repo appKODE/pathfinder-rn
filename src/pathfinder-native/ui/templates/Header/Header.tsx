@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, Text, Platform, StatusBar } from 'react-native';
+import { theme } from '../../theme';
 
 type Props = {
   right?: React.ReactNode;
@@ -39,6 +40,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: 'bold',
     fontSize: 18,
+    color: theme.colors.foreground.default,
   },
 });
 
