@@ -31,13 +31,13 @@
     "ios",
     "android"
   ],
-  "repository": "https://github.com/appKODE/react-native-pathfinder",
+  "repository": "https://github.com/appKODE/pathfinder-rn",
   "author": "frontend-team@kode.ru",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/appKODE/react-native-pathfinder/issues"
+    "url": "https://github.com/appKODE/pathfinder-rn/issues"
   },
-  "homepage": "https://github.com/appKODE/react-native-pathfinder#readme",
+  "homepage": "https://github.com/appKODE/pathfinder-rn#readme",
   "publishConfig": {
     "cache": "cache/.npm",
     "registry": "https://registry.npmjs.org/"
