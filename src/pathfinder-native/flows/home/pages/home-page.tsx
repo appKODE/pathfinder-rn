@@ -4,7 +4,7 @@ import { SectionList, SectionListRenderItem } from 'react-native';
 import { usePathfinder } from '../../../../pathfinder-react';
 import { EnvironmentSelector } from '../../../features/environment-selector';
 import { Layout, TextInput, Typography } from '../../../ui/atoms';
-import { createSections } from '../lib';
+import { createSections } from '../libs';
 import { SectionHeader } from '../molecules';
 import { ApiListItem } from '../organisms';
 import type { Section, ListItem } from '../types';
