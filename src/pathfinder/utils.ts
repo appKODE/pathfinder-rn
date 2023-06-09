@@ -2,6 +2,7 @@ import * as URLPolyfill from 'react-native-url-polyfill';
 import { parse } from 'querystring';
 
 type TBuildUrlInputParams = {
+  generatePathFromTemplate: boolean;
   pathParameters?: Record<string, string>;
   queryParameters?: Record<string, string>;
 };
@@ -9,19 +10,25 @@ type TBuildUrlInputParams = {
 export const generatePath = (
   originalPath: string,
   template: string,
-  { pathParameters = {}, queryParameters = {} }: TBuildUrlInputParams
+  {
+    generatePathFromTemplate,
+    pathParameters = {},
+    queryParameters = {},
+  }: TBuildUrlInputParams
 ) => {
   const withPathParams = template.replace(/{(\w*)}/gm, function (_, e) {
     return pathParameters[e];
   });
 
   const templateChunks = withPathParams.split('/').reverse();
-  const resultPath = originalPath
-    .split('/')
-    .reverse()
-    .map((chunk, index) => templateChunks[index] || chunk)
-    .reverse()
-    .join('/');
+  const resultPath = generatePathFromTemplate
+    ? withPathParams
+    : originalPath
+        .split('/')
+        .reverse()
+        .map((chunk, index) => templateChunks[index] || chunk)
+        .reverse()
+        .join('/');
 
   let queryChunks: string[] = [];
   let queryString = '';
