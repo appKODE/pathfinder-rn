@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0](https://github.com/appKODE/pathfinder-rn/compare/v0.2.4...v1.0.0) (2023-06-09)
+
+
+### Bug Fixes
+
+* some bugs after refactor ([ac006c9](https://github.com/appKODE/pathfinder-rn/commit/ac006c996172aa1b0a8eb8e257c709e0f4637460))
+
 ### [0.2.4](https://github.com/appKODE/react-native-pathfinder/compare/v0.2.3...v0.2.4) (2023-06-09)
 
 ### [0.2.3](https://github.com/appKODE/react-native-pathfinder/compare/v0.2.2...v0.2.3) (2023-06-09)
