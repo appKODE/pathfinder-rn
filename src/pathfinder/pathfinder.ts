@@ -169,7 +169,11 @@ export class Pathfinder {
 
     let domain = createDomain(protocol, hostname, port);
 
-    if (server && settings.enabledMock && this.canUseMockServer(server)) {
+    const isNeedUseMock = Boolean(
+      server && settings.enabledMock && this.canUseMockServer(server)
+    );
+
+    if (server && isNeedUseMock) {
       queryParameters = {
         ...queryParameters,
         ...this.getQueryParamsMockServer(server),
@@ -191,6 +195,7 @@ export class Pathfinder {
     }
 
     const path = generatePath(pathname, template, {
+      generatePathFromTemplate: isNeedUseMock,
       pathParameters: pathParameters,
       queryParameters: queryParameters,
     });

@@ -54,6 +54,7 @@ describe('pathfinder/utils.tsx', function () {
           '/mobile/api/events/99999999',
           '/mobile/api/events/{event_item_id}',
           {
+            generatePathFromTemplate: false,
             pathParameters: {
               event_item_id: '2',
               test: '123',
@@ -72,6 +73,7 @@ describe('pathfinder/utils.tsx', function () {
           '/v2/pet/9223372036854753736?school_id=59&class_unit_id=403491',
           '/pet/{petId}',
           {
+            generatePathFromTemplate: false,
             pathParameters: {
               petId: '2',
             },
@@ -86,6 +88,7 @@ describe('pathfinder/utils.tsx', function () {
           '/test/mobile/api/events/99999999',
           '/mobile/api/events/{event_item_id}',
           {
+            generatePathFromTemplate: false,
             pathParameters: {
               event_item_id: '2',
               test: '123',
@@ -96,6 +99,21 @@ describe('pathfinder/utils.tsx', function () {
           }
         )
       ).toEqual('/test/mobile/api/events/2?__dynamic=false');
+    });
+
+    it('must return valid path by template (generatePathFromTemplate = true)', function () {
+      expect(
+        generatePath(
+          '/v2/pet/9223372036854753736?school_id=59&class_unit_id=403491',
+          '/pet/{petId}',
+          {
+            generatePathFromTemplate: true,
+            pathParameters: {
+              petId: '2',
+            },
+          }
+        )
+      ).toEqual('/pet/2');
     });
   });
 
