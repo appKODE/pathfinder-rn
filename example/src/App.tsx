@@ -27,6 +27,16 @@ const config = PathfinderConfiguration.create({
     name: 'users',
     //@ts-ignore
     specification: users,
+    // if needed set specific mock server settings for scheme
+    server: {
+      domain: 'https://127.0.0.1:3100',
+      headers: {
+        Accept: 'application/json',
+      },
+      queryParams: {
+        __dynamic: false,
+      },
+    },
   });
 
 const Pathfinder = createPathfinder(config, AsyncStorage);
