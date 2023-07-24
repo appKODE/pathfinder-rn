@@ -41,11 +41,14 @@ export const ExampleSelector = ({
       return [];
     }
     const selectedStatusCodeResponse = responses[code];
-    if (!isResponseObject(selectedStatusCodeResponse)) {
+    if (
+      !isResponseObject(selectedStatusCodeResponse) ||
+      !selectedStatusCodeResponse.content
+    ) {
       return [];
     }
 
-    const [mediatype] = Object.values(selectedStatusCodeResponse.content!);
+    const [mediatype] = Object.values(selectedStatusCodeResponse.content);
 
     if (!mediatype?.examples) {
       return [];
