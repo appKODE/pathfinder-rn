@@ -11,6 +11,7 @@ import { CollapsableBlock } from '../../../../ui/organisms';
 import { Parameter } from '../parameter/Parameter';
 import { AddParamForm } from '../add-param-form/AddParamForm';
 import { unionParameters } from '../../utils';
+import { ExampleSelector } from '../../molecules';
 
 type Props = OperationObject & {
   method: 'get' | 'post' | 'put' | 'delete';
@@ -30,6 +31,7 @@ export const ApiDetails: React.FC<Props> = ({
   path,
   method,
   parameters = [],
+  responses,
 }) => {
   const { pathfinder } = usePathfinder();
 
@@ -100,10 +102,11 @@ export const ApiDetails: React.FC<Props> = ({
   const pathParams = params.filter((parameter) => parameter.in === 'path');
   const headers = params.filter((parameter) => parameter.in === 'header');
   const queryParams = params.filter((parameter) => parameter.in === 'query');
+
   return (
     <Layout.Cal style={styles.root}>
       <Layout.Row style={styles.mockInfo} alignItems="center">
-        <Typography variant="body2">Enabled</Typography>
+        <Typography variant="body2">Interceptor enabled</Typography>
         <Switch
           onValueChange={(value) =>
             pathfinder.updateTemplateSettings(path, method, (lastState) => ({
@@ -127,6 +130,11 @@ export const ApiDetails: React.FC<Props> = ({
           value={enabledMock}
         />
       </Layout.Row>
+      <ExampleSelector
+        responses={responses}
+        headers={headers}
+        onChange={onChangeValue('header', 'Prefer')}
+      />
       <CollapsableBlock title="Headers">
         {headers.map((header) => {
           return (

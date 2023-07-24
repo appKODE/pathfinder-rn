@@ -18,10 +18,15 @@ const styles = StyleSheet.create({
 
 type Props = {
   title: string;
+  initialState?: boolean;
 };
 
-export const CollapsableBlock: React.FC<Props> = ({ title, children }) => {
-  const [open, setOpenState] = useState(false);
+export const CollapsableBlock: React.FC<Props> = ({
+  title,
+  children,
+  initialState,
+}) => {
+  const [open, setOpenState] = useState(Boolean(initialState));
   const toggle = useCallback(() => {
     setOpenState((state) => !state);
   }, []);
