@@ -7,13 +7,21 @@ import type {
   ResponsesObject,
   ParameterObject,
 } from '../../../../pathfinder-react';
-import { createQueryString, isResponseObject, parseQueryString } from '../libs';
+import { createQueryString, getExamples, parseQueryString } from '../libs';
 
 type TExampleSelectorProps = {
   responses: ResponsesObject;
   headers: ParameterObject[];
   onChange: (value: string) => void;
 };
+
+const isExistedExample = (examples: string[], exampleName: string | null) =>
+  Boolean(exampleName && examples.includes(exampleName));
+
+const createChipDataFromString = (value: string) => ({
+  title: value,
+  value: value,
+});
 
 export const ExampleSelector = ({
   responses,
@@ -30,47 +38,30 @@ export const ExampleSelector = ({
   }, [headers]);
 
   const statuses = useMemo(() => {
-    return Object.keys(responses).map((statusCode) => ({
-      title: statusCode,
-      value: statusCode,
-    }));
+    return Object.keys(responses).map(createChipDataFromString);
   }, [responses]);
 
   const examples = useMemo(() => {
-    if (!code) {
-      return [];
-    }
-    const selectedStatusCodeResponse = responses[code];
-    if (
-      !isResponseObject(selectedStatusCodeResponse) ||
-      !selectedStatusCodeResponse.content
-    ) {
-      return [];
-    }
-
-    const [mediatype] = Object.values(selectedStatusCodeResponse.content);
-
-    if (!mediatype?.examples) {
-      return [];
-    }
-
-    return Object.keys(mediatype.examples).map((exampleName) => ({
-      title: exampleName,
-      value: exampleName,
-    }));
+    return getExamples(responses, code).map(createChipDataFromString);
   }, [responses, code]);
 
   const addParameter = useCallback(
     (key: string, value: string) => {
-      onChange(
-        createQueryString({
-          example,
-          code,
-          [key]: value,
-        })
-      );
+      const params = {
+        example,
+        code,
+        [key]: value,
+      };
+
+      if (
+        !isExistedExample(getExamples(responses, params.code), params.example)
+      ) {
+        params.example = null;
+      }
+
+      onChange(createQueryString(params));
     },
-    [code, example, onChange]
+    [code, example, responses, onChange]
   );
 
   const changeCodeHandle = useCallback(
