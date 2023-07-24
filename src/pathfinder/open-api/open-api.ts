@@ -165,6 +165,7 @@ export interface RequestBodyObject extends ISpecificationExtension {
   required?: boolean;
 }
 export interface ContentObject {
+  examples: ExamplesObject;
   [mediatype: string]: MediaTypeObject;
 }
 export interface MediaTypeObject extends ISpecificationExtension {
