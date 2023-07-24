@@ -85,11 +85,11 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse"
+                },
+                "examples": {
+                  "default": {},
+                  "success": {}
                 }
-              },
-              "examples": {
-                "default": {},
-                "success": {}
               }
             }
           },
@@ -99,11 +99,11 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse"
+                },
+                "examples": {
+                  "default": {},
+                  "fail": {}
                 }
-              },
-              "examples": {
-                "default": {},
-                "fail": {}
               }
             }
           }
@@ -360,34 +360,42 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Pet"
+                },
+                "examples": {
+                  "default": {},
+                  "success": {}
                 }
               },
               "application/xml": {
                 "schema": {
                   "$ref": "#/components/schemas/Pet"
+                },
+                "examples": {
+                  "default": {},
+                  "success": {}
                 }
-              },
-              "examples": {
-                "default": {},
-                "success": {}
               }
             }
           },
           "400": {
             "description": "Invalid ID supplied",
             "content": {
-              "examples": {
-                "default": {},
-                "fail": {}
+              "application/json": {
+                "examples": {
+                  "default": {},
+                  "fail": {}
+                }
               }
             }
           },
           "404": {
             "description": "Pet not found",
             "content": {
-              "examples": {
-                "default": {},
-                "fail": {}
+              "application/json": {
+                "examples": {
+                  "default": {},
+                  "fail": {}
+                }
               }
             }
           }
