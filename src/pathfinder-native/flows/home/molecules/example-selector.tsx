@@ -44,9 +44,17 @@ export const ExampleSelector = ({
     if (!isResponseObject(selectedStatusCodeResponse)) {
       return [];
     }
-    return Object.keys(selectedStatusCodeResponse.content!.examples).map(
-      (exampleName) => ({ title: exampleName, value: exampleName })
-    );
+
+    const [mediatype] = Object.values(selectedStatusCodeResponse.content!);
+
+    if (!mediatype?.examples) {
+      return [];
+    }
+
+    return Object.keys(mediatype.examples).map((exampleName) => ({
+      title: exampleName,
+      value: exampleName,
+    }));
   }, [responses, code]);
 
   const addParameter = useCallback(
