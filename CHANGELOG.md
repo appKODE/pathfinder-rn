@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.4](https://github.com/appKODE/pathfinder-rn/compare/v1.0.3...v1.0.4) (2023-07-24)
+
+
+### Features
+
+* **headers:** added tool for creation example and code headers ([7bdc9db](https://github.com/appKODE/pathfinder-rn/commit/7bdc9db02d82317ac0a4d31d44999678b5104fbc))
+
 ### [1.0.3](https://github.com/appKODE/pathfinder-rn/compare/v1.0.2...v1.0.3) (2023-06-09)
 
 ### [1.0.2](https://github.com/appKODE/pathfinder-rn/compare/v1.0.1...v1.0.2) (2023-06-09)
