@@ -363,7 +363,13 @@
                 },
                 "examples": {
                   "default": {},
-                  "success": {}
+                  "success": {},
+                  "success2": {},
+                  "success3": {},
+                  "success4": {},
+                  "success5": {},
+                  "success6": {},
+                  "success7": {}
                 }
               },
               "application/xml": {

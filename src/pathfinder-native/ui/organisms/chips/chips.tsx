@@ -17,7 +17,7 @@ type TChipsProps = {
 
 export const Chips = ({ items, selected, onSelect }: TChipsProps) => {
   return (
-    <Layout.Row>
+    <Layout.Row style={styles.root}>
       {items.map(({ value, title }) => {
         return (
           <Chip
@@ -34,7 +34,11 @@ export const Chips = ({ items, selected, onSelect }: TChipsProps) => {
 };
 
 const styles = StyleSheet.create({
+  root: {
+    flexWrap: 'wrap',
+  },
   item: {
     marginRight: 5,
+    marginBottom: 5,
   },
 });
