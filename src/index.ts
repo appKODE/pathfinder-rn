@@ -1,2 +1,2 @@
 export { createPathfinder, PathfinderProps } from './pathfinder-native';
-export { PathfinderConfiguration } from './pathfinder';
+export { PathfinderConfiguration, Specification } from './pathfinder';

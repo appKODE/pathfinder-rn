@@ -37,9 +37,9 @@ export const DeepLink = ({ children }: Props) => {
     };
 
     Linking.getInitialURL().then(onReceivedEvent);
-    Linking.addEventListener('url', handleOpenURL);
+    const subscription = Linking.addEventListener('url', handleOpenURL);
     return () => {
-      Linking.removeEventListener('url', handleOpenURL);
+      subscription.remove();
     };
   }, []);
 
