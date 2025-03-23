@@ -9,4 +9,5 @@ export type {
   MockServerSettings,
   PathfinderSettings,
   Scheme,
+  Specification,
 } from './types';
