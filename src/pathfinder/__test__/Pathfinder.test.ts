@@ -44,6 +44,13 @@ describe('pathfinder', function () {
       enabledMock: true,
       enabled: true,
     }));
+
+    pathfinder.updateTemplateSettings('/pet/list', 'put', (lastState) => ({
+      ...lastState,
+      enabledMock: true,
+      enabled: true,
+    }));
+
     expect(
       pathfinder.resolve({
         url: 'https://petstore.swagger.io/v2/pet/9223372036854753736?school_id=59&class_unit_id=403491',
@@ -51,6 +58,18 @@ describe('pathfinder', function () {
       })
     ).toEqual({
       url: 'https://127.0.0.1:3100/some/path/pet/9223372036854753736?school_id=59&class_unit_id=403491&__dynamic=false',
+      headers: {
+        Accept: 'application/json',
+      },
+    });
+
+    expect(
+      pathfinder.resolve({
+        url: 'https://petstore.swagger.io/v2/pet/list?school_id=59&class_unit_id=403491',
+        method: 'put',
+      })
+    ).toEqual({
+      url: 'https://127.0.0.1:3100/some/path/pet/list?school_id=59&class_unit_id=403491&__dynamic=false',
       headers: {
         Accept: 'application/json',
       },
@@ -129,6 +148,7 @@ describe('pathfinder', function () {
       enabledMock: false,
       parameters: [],
     }));
+
     expect(
       pathfinder.resolve({
         url: 'https://petstore.swagger.io/v2/pet/9223372036854753736?school_id=59&class_unit_id=403491',
