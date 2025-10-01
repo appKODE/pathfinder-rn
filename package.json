@@ -1,6 +1,6 @@
 {
   "name": "@kode-frontend/pathfinder-rn",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "pathfinder",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
