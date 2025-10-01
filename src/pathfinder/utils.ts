@@ -43,12 +43,18 @@ export const generatePath = (
   return resultPath + queryString;
 };
 
-export const compareUrlWithTemplate = (url: string) => {
+export const compareUrlWithTemplate = (url: string, strict = false) => {
   const { pathname } = new Url(url);
   return (template: string) => {
     const regexp = template.replace(/{.+}/g, '.+');
-    const templateChunks = regexp.split('/').reverse();
-    const pathChunks = pathname.split('/').reverse();
+    const templateChunks = regexp.split('/').filter(Boolean).reverse();
+    const pathChunks = pathname.split('/').filter(Boolean).reverse();
+    if (strict) {
+      return (
+        new RegExp(regexp).test(pathname) &&
+        templateChunks.every((chunk, index) => chunk === pathChunks[index])
+      );
+    }
     return (
       new RegExp(regexp).test(pathname) &&
       templateChunks.every((chunk, index) =>

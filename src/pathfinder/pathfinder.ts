@@ -134,9 +134,11 @@ export class Pathfinder {
 
   private findTemplateAndScheme(url: string) {
     for (const scheme of this.getSchemas()) {
-      const template = Object.keys(scheme.specification.paths).find(
-        compareUrlWithTemplate(url)
-      );
+      const paths = Object.keys(scheme.specification.paths);
+      const template =
+        paths.find(compareUrlWithTemplate(url, true)) ??
+        paths.find(compareUrlWithTemplate(url));
+
       if (template) {
         return { template, scheme };
       }
