@@ -3,7 +3,7 @@
 
 import {
   SpecificationExtension,
-  ISpecificationExtension,
+  type ISpecificationExtension,
 } from './specification-extension';
 
 export interface OpenAPIObject extends ISpecificationExtension {
@@ -230,7 +230,7 @@ export interface LinkObject extends ISpecificationExtension {
 export interface LinkParametersObject {
   [name: string]: any | string;
 }
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
+
 export interface HeaderObject extends BaseParameterObject {}
 export interface TagObject extends ISpecificationExtension {
   name: string;

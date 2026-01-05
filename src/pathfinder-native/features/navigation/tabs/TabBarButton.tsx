@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  ImageSourcePropType,
+  type ImageSourcePropType,
   StyleSheet,
   TouchableOpacity,
   Image,

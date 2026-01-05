@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, useState } from 'react';
-import { SectionList, SectionListRenderItem } from 'react-native';
+import { SectionList, type SectionListRenderItem } from 'react-native';
 
 import { usePathfinder } from '../../../../pathfinder-react';
 import { EnvironmentSelector } from '../../../features/environment-selector';
@@ -60,7 +60,7 @@ export const HomePage = () => {
           placeholder="Search"
         />
       </Layout.Cal>
-      <SectionList<ListItem>
+      <SectionList
         sections={sections}
         keyExtractor={(item) => item.path}
         renderItem={renderItem}

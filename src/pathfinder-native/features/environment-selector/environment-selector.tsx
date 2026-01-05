@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { usePathfinder } from '../../../pathfinder-react';
 
 import { SegmentControl } from '../../ui/molecules';

@@ -2,7 +2,7 @@ import { createContext } from 'react';
 import {
   Pathfinder,
   PathfinderConfiguration,
-  PathfinderSettings,
+  type PathfinderSettings,
 } from '../pathfinder';
 
 export type PathfinderContext = {

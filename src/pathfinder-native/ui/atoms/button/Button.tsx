@@ -2,7 +2,7 @@ import React from 'react';
 import {
   StyleSheet,
   TouchableOpacity,
-  TouchableOpacityProps,
+  type TouchableOpacityProps,
   Text,
 } from 'react-native';
 import { theme } from '../../theme';

@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Keyboard, KeyboardEventName, Platform } from 'react-native';
+import { Keyboard, type KeyboardEventName, Platform } from 'react-native';
 
 type TOptions = {
   onOpen: (height: number) => void;

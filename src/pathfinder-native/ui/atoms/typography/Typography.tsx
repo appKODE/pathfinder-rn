@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, StyleSheet, TextStyle, TextProps } from 'react-native';
+import { Text, StyleSheet, type TextStyle, type TextProps } from 'react-native';
 import { theme } from '../../theme';
 
 type TFontType =

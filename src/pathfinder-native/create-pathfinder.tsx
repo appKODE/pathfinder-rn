@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 
 import type { PathfinderConfiguration } from '../pathfinder';
 import { createPathfinderProvider } from '../pathfinder-react';
