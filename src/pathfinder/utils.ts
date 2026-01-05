@@ -1,5 +1,5 @@
 import * as URLPolyfill from 'react-native-url-polyfill';
-import { parse } from 'querystring';
+import { parse } from 'query-string';
 
 type TBuildUrlInputParams = {
   generatePathFromTemplate: boolean;
@@ -17,7 +17,7 @@ export const generatePath = (
   }: TBuildUrlInputParams
 ) => {
   const withPathParams = template.replace(/{(\w*)}/gm, function (_, e) {
-    return pathParameters[e];
+    return pathParameters[e] ?? '';
   });
 
   const templateChunks = withPathParams.split('/').reverse();
@@ -58,7 +58,7 @@ export const compareUrlWithTemplate = (url: string, strict = false) => {
     return (
       new RegExp(regexp).test(pathname) &&
       templateChunks.every((chunk, index) =>
-        new RegExp(chunk).test(pathChunks[index])
+        new RegExp(chunk).test(pathChunks[index] ?? '')
       )
     );
   };
@@ -70,7 +70,7 @@ export const getPathParameters = (pathname: string, template: string) => {
   const pathParamsChunk = template.split('/').reverse();
   pathParamsChunk.forEach((chunk, index) => {
     if (chunk.startsWith('{') && chunk.endsWith('}')) {
-      pathParameters[chunk.replace(/{|}/g, '')] = pathChunk[index];
+      pathParameters[chunk.replace(/{|}/g, '')] = pathChunk[index] ?? '';
     }
   });
   return pathParameters;
@@ -80,7 +80,7 @@ export const getQueryParams = (search: string): Record<string, string> => {
   if (search.startsWith('?')) {
     search = search.replace('?', '');
   }
-  return parse(search) as any;
+  return parse(search, { sort: false }) as any;
 };
 
 export const createDomain = (

@@ -2,7 +2,7 @@ import React, { useCallback, useMemo, useRef } from 'react';
 import {
   StyleSheet,
   Animated,
-  PanResponderInstance,
+  type PanResponderInstance,
   PanResponder,
   Dimensions,
   View,

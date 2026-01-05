@@ -7,7 +7,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   StatusBar as StatusBarBase,
-  StatusBarProps,
+  type StatusBarProps,
 } from 'react-native';
 
 import { Control } from './ui/atoms/control/Control';

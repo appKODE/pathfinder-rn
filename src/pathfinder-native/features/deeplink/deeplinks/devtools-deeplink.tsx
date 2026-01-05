@@ -19,7 +19,7 @@ export const DevtoolsDeeplink = ({ onShownStateChange }: Props) => {
   };
 
   const execute = (params: TDeepLinkHandlerParams) => {
-    switch (params.mapPath[1].trim()) {
+    switch (params.mapPath[1]?.trim()) {
       case 'open':
         open();
         break;

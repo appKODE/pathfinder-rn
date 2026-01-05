@@ -1,7 +1,7 @@
 import {
   isReferenceObject,
-  ParameterObject,
-  ReferenceObject,
+  type ParameterObject,
+  type ReferenceObject,
 } from '../../../pathfinder';
 
 export const unionParameters = (

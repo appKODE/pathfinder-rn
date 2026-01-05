@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, type PropsWithChildren } from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import { TabBar, TTabBarProps } from './TabBar';
+import { TabBar, type TTabBarProps } from './TabBar';
 import { theme } from '../../../ui/theme';
 
 const styles = StyleSheet.create({
@@ -18,9 +18,9 @@ const styles = StyleSheet.create({
   },
 });
 
-export type TTabsProps = Partial<TTabBarProps>;
+export type TTabsProps = PropsWithChildren<Partial<TTabBarProps>>;
 
-export const Tabs: React.FC<TTabsProps> = ({ children, ...tabBarProps }) => {
+export const Tabs = ({ children, ...tabBarProps }: TTabsProps) => {
   const routes: any[] =
     React.Children.map(children, (child: any) => ({
       label: child.props.label,

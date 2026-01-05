@@ -1,4 +1,4 @@
-import React from 'react';
+import { type PropsWithChildren } from 'react';
 import { SafeAreaView, StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -8,6 +8,6 @@ const styles = StyleSheet.create({
   },
 });
 
-export const Page: React.FC = ({ children }) => {
+export const Page = ({ children }: PropsWithChildren) => {
   return <SafeAreaView style={styles.root}>{children}</SafeAreaView>;
 };

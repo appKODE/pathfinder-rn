@@ -1,6 +1,6 @@
 import React from 'react';
-import { TouchableOpacity, TouchableOpacityProps } from 'react-native';
-import { Icon, TIconProps } from '../../atoms';
+import { TouchableOpacity, type TouchableOpacityProps } from 'react-native';
+import { Icon, type TIconProps } from '../../atoms';
 
 type Props = TouchableOpacityProps & TIconProps;
 

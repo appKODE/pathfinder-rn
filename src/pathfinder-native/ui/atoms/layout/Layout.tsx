@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, ViewProps, ViewStyle } from 'react-native';
+import { StyleSheet, View, type ViewProps, type ViewStyle } from 'react-native';
 
 const styles = StyleSheet.create({
   row: {
