@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import { useCallback, useState, type PropsWithChildren } from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 
 import { Typography, Layout } from '../../atoms';
@@ -16,16 +16,12 @@ const styles = StyleSheet.create({
   },
 });
 
-type Props = {
+type Props = PropsWithChildren<{
   title: string;
   initialState?: boolean;
-};
+}>;
 
-export const CollapsableBlock: React.FC<Props> = ({
-  title,
-  children,
-  initialState,
-}) => {
+export const CollapsableBlock = ({ title, children, initialState }: Props) => {
   const [open, setOpenState] = useState(Boolean(initialState));
   const toggle = useCallback(() => {
     setOpenState((state) => !state);

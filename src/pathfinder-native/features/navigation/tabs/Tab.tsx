@@ -1,6 +1,6 @@
-import React from 'react';
+import { type PropsWithChildren } from 'react';
 import type { TTabBarButtonProps } from './TabBarButton';
 
-export const Tab: React.FC<Omit<TTabBarButtonProps, 'onPress'>> = ({
-  children,
-}) => <>{children}</>;
+type Props = PropsWithChildren<Omit<TTabBarButtonProps, 'onPress'>>;
+
+export const Tab = ({ children }: Props) => <>{children}</>;

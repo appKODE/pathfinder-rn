@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { TabBarButton, TTabBarButtonProps } from './TabBarButton';
+import { TabBarButton, type TTabBarButtonProps } from './TabBarButton';
 
 const styles = StyleSheet.create({
   root: {

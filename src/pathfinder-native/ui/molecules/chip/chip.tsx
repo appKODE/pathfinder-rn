@@ -1,9 +1,8 @@
-import React from 'react';
 import {
-  StyleProp,
+  type StyleProp,
   StyleSheet,
   TouchableOpacity,
-  ViewStyle,
+  type ViewStyle,
 } from 'react-native';
 
 import { Typography } from '../../atoms';
