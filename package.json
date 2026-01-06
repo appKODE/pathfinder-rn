@@ -1,6 +1,6 @@
 {
   "name": "@kode-frontend/pathfinder-rn",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "Pathfinder for React Native",
   "main": "./lib/module/index.js",
   "types": "./lib/typescript/src/index.d.ts",
