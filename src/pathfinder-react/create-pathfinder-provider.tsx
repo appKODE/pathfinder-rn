@@ -1,8 +1,8 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import {
   Pathfinder,
   PathfinderConfiguration,
-  PathfinderSettings,
+  type PathfinderSettings,
 } from '../pathfinder';
 import { PathfinderContext } from './context';
 import type { PathfinderProviderProps } from './types';

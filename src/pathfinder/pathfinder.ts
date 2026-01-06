@@ -86,6 +86,11 @@ export class Pathfinder {
     cb: (lastState: MethodObject) => MethodObject
   ) {
     this.prepareTemplateSettings(template, method);
+
+    if (!this.settings.paths[template]) {
+      this.settings.paths[template] = {};
+    }
+
     this.settings.paths[template][method] = cb(
       this.settings.paths[template][method]!
     );
@@ -208,11 +213,11 @@ export class Pathfinder {
   private buildHeaders(
     originalHeaders: Record<string, string>,
     settings: MethodObject,
-    server: MockServerSettings
+    server?: MockServerSettings
   ) {
     let headers = { ...originalHeaders };
 
-    if (settings.enabledMock && this.canUseMockServer(server)) {
+    if (server && settings.enabledMock && this.canUseMockServer(server)) {
       headers = {
         ...headers,
         ...this.getHeadersMockServer(server),

@@ -1,5 +1,4 @@
-//@ts-ignore
-import XHRInterceptorBase from 'react-native/Libraries/Network/XHRInterceptor';
+import { XHRInterceptorBase } from './original-interceptor';
 
 type OriginalSendCallback = (data: any, xhr: any) => void;
 

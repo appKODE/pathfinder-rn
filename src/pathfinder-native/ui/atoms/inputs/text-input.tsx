@@ -2,7 +2,7 @@ import React from 'react';
 import {
   StyleSheet,
   TextInput as TextInputBase,
-  TextInputProps,
+  type TextInputProps,
   View,
   Text,
 } from 'react-native';

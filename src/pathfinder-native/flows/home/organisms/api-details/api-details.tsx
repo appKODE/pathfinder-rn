@@ -58,7 +58,7 @@ export const ApiDetails: React.FC<Props> = ({
           (parameter) => parameter.in === type && parameter.name === name
         );
 
-        if (index !== -1) {
+        if (index !== -1 && parameters[index]) {
           parameters[index].value = value;
         } else {
           parameters.push({

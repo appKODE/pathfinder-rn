@@ -1,5 +1,6 @@
 import type { SectionListData } from 'react-native';
-import type { PathItemObject } from 'src/pathfinder/open-api/open-api';
+
+import type { PathItemObject } from '../../../pathfinder/open-api/open-api';
 
 export type ListItem = {
   path: string;

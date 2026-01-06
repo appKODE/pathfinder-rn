@@ -1,4 +1,4 @@
-import React from 'react';
+import { type PropsWithChildren } from 'react';
 import { StyleSheet, Text } from 'react-native';
 import { theme } from '../../theme';
 
@@ -27,11 +27,11 @@ const styles = StyleSheet.create({
   },
 });
 
-type Props = {
+type Props = PropsWithChildren<{
   method: 'get' | 'post' | 'delete' | 'put';
-};
+}>;
 
-export const MethodBadge: React.FC<Props> = ({ children, method }) => {
+export const MethodBadge = ({ children, method }: Props) => {
   return (
     <Text style={[styles.common, styles[method]]} allowFontScaling={false}>
       {children}

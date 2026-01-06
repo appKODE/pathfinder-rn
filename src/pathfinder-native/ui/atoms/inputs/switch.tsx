@@ -1,5 +1,4 @@
-import React from 'react';
-import { Switch as Base, SwitchProps } from 'react-native';
+import { Switch as Base, type SwitchProps } from 'react-native';
 
 type TSwitchProps = SwitchProps;
 

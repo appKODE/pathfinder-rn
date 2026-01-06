@@ -1,4 +1,3 @@
-import React from 'react';
 import { StyleSheet } from 'react-native';
 
 import { Typography, Layout } from '../../../ui/atoms';
