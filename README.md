@@ -92,12 +92,14 @@ export default function App() {
 
 ## Props
 
-| prop name           | type                  | description                                                            |
-| ------------------- | --------------------- | ---------------------------------------------------------------------- |
-| initialEnvironment  | string                | Initial environments, should be static (required)                      |
-| environments        | string[]              | List of environments (required)                                        |
-| devMode             | boolean               | Allows you to output information for developers to the console         |
-| autostartForDev     | boolean               | Launches the `pathfinder` when the application is launched in dev mode |
+| prop name           | type                     | description                                                            |
+| ------------------- | ------------------------ | ---------------------------------------------------------------------- |
+| initialEnvironment  | string                   | Initial environments, should be static (required)                      |
+| environments        | string[]                 | List of environments (required)                                        |
+| devMode             | boolean                  | Allows you to output information for developers to the console         |
+| autostartForDev     | boolean                  | Launches the `pathfinder` when the application is launched in dev mode |
+| onChangeEnvironment | (env: string) => void    | Callback for change environment                                        |
+| renderContent       | ({ close }) => ReactNode | Render prop for custom content                                         |
 
 
 

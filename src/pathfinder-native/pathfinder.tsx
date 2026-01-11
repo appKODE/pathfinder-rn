@@ -1,22 +1,18 @@
 import React from 'react';
 
-import type {
-  PathfinderProviderProps,
-  PathfinderSettings,
-} from '../pathfinder-react';
+import type { PathfinderProviderProps } from '../pathfinder-react';
 import { usePersistSettings } from './features/persist-settings';
 import { PathResolver } from './features/path-resolver';
 import type { TAsyncStorage } from './types';
 import { App } from './app';
+import type { PathfinderProps as BaseProps } from './types';
 
-export type PathfinderProps = {
-  devMode: boolean;
-  initialEnvironment: string;
-  environments: string[];
-  initialSettings?: PathfinderSettings;
-  asyncStorage: TAsyncStorage;
+export type PathfinderProps = Omit<
+  BaseProps,
+  'children' | 'autostartForDev'
+> & {
   Provider: React.ComponentType<PathfinderProviderProps>;
-  onChangeEnvironment?: (env: string) => void;
+  asyncStorage: TAsyncStorage;
 };
 
 export const Pathfinder = ({
@@ -29,6 +25,7 @@ export const Pathfinder = ({
   devMode,
   initialEnvironment,
   environments,
+  renderContent,
   onChangeEnvironment,
 }: PathfinderProps) => {
   const [savedSettings, onChangeSettings] = usePersistSettings(
@@ -52,7 +49,7 @@ export const Pathfinder = ({
       onChangeEnvironment={onChangeEnvironment}
     >
       <PathResolver devMode={devMode} />
-      <App />
+      <App renderContent={renderContent} />
     </Provider>
   );
 };

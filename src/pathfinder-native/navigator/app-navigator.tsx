@@ -9,7 +9,7 @@ import { theme } from '../ui/theme';
 export const AppNavigator: React.FC = () => {
   return (
     <Tabs activeColor={theme.colors.foreground.primary}>
-      <Tab routeName={'home'} icon={Assets.icons.home} label="Home">
+      <Tab routeName={'home'} icon={Assets.icons.apiContracts} label="Home">
         <HomePage />
       </Tab>
       <Tab routeName={'settings'} icon={Assets.icons.settings} label="Settings">

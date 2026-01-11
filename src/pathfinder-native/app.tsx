@@ -40,10 +40,33 @@ const StatusBar: TStatusBar = Platform.select({
   },
 });
 
-export const App = () => {
+export type RenderContentProps = {
+  close: () => void;
+};
+
+export type Props = {
+  /**
+   * Use it for custom rendering content
+   */
+  renderContent?: (props: RenderContentProps) => React.ReactNode;
+};
+
+export const App = ({
+  renderContent = ({ close }) => (
+    <>
+      <Header
+        title="Pathfinder"
+        right={<IconButton onPress={close} icon="close" />}
+      />
+      <AppNavigator />
+    </>
+  ),
+}: Props) => {
   const { width } = useWindowDimensions();
+
   const slideX = useRef(new Animated.Value(-width)).current;
   const statusBarProps = useRef({});
+
   React.useEffect(() => {
     slideX.setValue(-width);
   }, [width, slideX]);
@@ -57,11 +80,13 @@ export const App = () => {
       useNativeDriver: false,
     }).start();
   }, [slideX, width]);
+
   const opacity = slideX.interpolate({
     inputRange: [-width + 50, -width + 80],
     outputRange: [0, 1],
     extrapolate: 'clamp',
   });
+
   return (
     <>
       <Animated.View style={[styles.root, { right: slideX, opacity }]}>
@@ -70,15 +95,10 @@ export const App = () => {
           enabled={Platform.OS === 'ios'}
           behavior="padding"
         >
-          <Page>
-            <Header
-              title="Pathfinder"
-              right={<IconButton onPress={onClose} icon="close" />}
-            />
-            <AppNavigator />
-          </Page>
+          <Page>{renderContent({ close: onClose })}</Page>
         </KeyboardAvoidingView>
       </Animated.View>
+
       <Control
         slideX={slideX}
         sliderStartPosition={-width}
