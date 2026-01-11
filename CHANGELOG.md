@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.1](https://github.com/appKODE/pathfinder-rn/compare/v1.1.0...v1.1.1) (2026-01-11)
+
+
+### Features
+
+* improved customization of content ([a9dd91c](https://github.com/appKODE/pathfinder-rn/commit/a9dd91c9b97f43d4880ab9c1b09d51171bb6f649))
+
 ## [1.1.0](https://github.com/appKODE/pathfinder-rn/compare/v1.0.15...v1.1.0) (2026-01-11)
 
 
