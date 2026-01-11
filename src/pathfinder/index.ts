@@ -10,4 +10,6 @@ export type {
   PathfinderSettings,
   Scheme,
   Specification,
+  ReferenceObject,
+  ParameterObject,
 } from './types';

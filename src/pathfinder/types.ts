@@ -4,6 +4,8 @@ import type {
   ParameterObject,
 } from './open-api/open-api';
 
+export type { ParameterObject, ReferenceObject } from './open-api/open-api';
+
 interface URL {
   hash: string;
   host: string;
