@@ -1,12 +1,14 @@
 import type { ReactNode } from 'react';
+
 import type { PathfinderSettings } from '../pathfinder-react';
+import type { Props as PathfinderPanelProps } from './app';
 
 export type TAsyncStorage = {
   setItem: (key: string, item: string) => Promise<any>;
   getItem: (key: string) => Promise<string | null | undefined>;
 };
 
-export type PathfinderProps = {
+export type PathfinderProps = PathfinderPanelProps & {
   /**
    * show logs about working pathfinder
    * default: `false`
@@ -46,5 +48,9 @@ export type PathfinderProps = {
    */
   autostartForDev?: boolean;
   children?: ReactNode | ReactNode[];
+  /**
+   * Callback for change environment
+   * @param env string
+   */
   onChangeEnvironment?: (env: string) => void;
 };
