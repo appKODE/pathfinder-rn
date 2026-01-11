@@ -53,13 +53,13 @@ export type Props = {
 
 export const App = ({
   renderContent = ({ close }) => (
-    <>
+    <Page>
       <Header
         title="Pathfinder"
         right={<IconButton onPress={close} icon="close" />}
       />
       <AppNavigator />
-    </>
+    </Page>
   ),
 }: Props) => {
   const { width } = useWindowDimensions();
@@ -95,7 +95,7 @@ export const App = ({
           enabled={Platform.OS === 'ios'}
           behavior="padding"
         >
-          <Page>{renderContent({ close: onClose })}</Page>
+          {renderContent({ close: onClose })}
         </KeyboardAvoidingView>
       </Animated.View>
 

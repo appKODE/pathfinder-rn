@@ -6,4 +6,9 @@ export {
   Settings,
   Assets,
 } from './pathfinder-native';
-export { PathfinderConfiguration, type Specification } from './pathfinder';
+export {
+  PathfinderConfiguration,
+  type Specification,
+  type ParameterObject,
+  type ReferenceObject,
+} from './pathfinder';
